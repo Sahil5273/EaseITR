@@ -78,7 +78,7 @@ export function AppShellHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Brand />
         <div className="ml-auto hidden lg:block">
@@ -125,7 +125,7 @@ export function AppShell({
   width?: "wide" | "reading";
 }) {
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen bg-slate-50/90 text-slate-900">
       <AppShellHeader />
       <main
         className={cn(
