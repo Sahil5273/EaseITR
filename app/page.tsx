@@ -10,7 +10,6 @@ import {
   Home,
   Landmark,
   LockKeyhole,
-  Menu,
   ShieldCheck,
   Sparkles,
   TrendingUp,
@@ -25,6 +24,7 @@ import {
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { AppShellHeader } from "@/components/easeitr/app-shell";
 import { Brand } from "@/components/easeitr/brand";
 
 const incomeTypes = [
@@ -61,84 +61,33 @@ const faqs = [
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen overflow-hidden bg-background text-foreground">
-      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-background/92 backdrop-blur-xl dark:border-slate-800">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Brand />
-          <nav
-            className="hidden items-center gap-7 text-sm font-medium text-slate-600 dark:text-slate-300 md:flex"
-            aria-label="Main navigation"
-          >
-            <Link
-              href="#how-it-works"
-              className="transition-colors hover:text-emerald-700"
-            >
-              How it works
-            </Link>
-            <Link
-              href="/documents"
-              className="transition-colors hover:text-emerald-700"
-            >
-              Documents
-            </Link>
-            <Link
-              href="/help"
-              className="transition-colors hover:text-emerald-700"
-            >
-              Tax guides
-            </Link>
-          </nav>
-          <div className="flex items-center gap-2">
-            <Button variant="ghost" asChild className="hidden sm:inline-flex">
-              <Link href="/dashboard">Explore demo</Link>
-            </Button>
-            <Button
-              asChild
-              className="rounded-xl bg-emerald-700 text-white hover:bg-emerald-800"
-            >
-              <Link href="/assessment">
-                Start assessment <ArrowRight />
-              </Link>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              aria-label="Open navigation"
-            >
-              <Menu />
-            </Button>
-          </div>
-        </div>
-      </header>
+    <main className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+      <AppShellHeader />
 
-      <section className="relative border-b border-slate-200/80 dark:border-slate-800">
-        <div className="absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_75%_15%,rgba(16,185,129,0.13),transparent_42%)]" />
+      <section className="relative border-b border-slate-200/80 bg-white dark:border-slate-800 dark:bg-slate-950">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.03fr_0.97fr] lg:px-8 lg:py-24">
           <div className="max-w-2xl">
             <Badge
               variant="outline"
-              className="mb-6 rounded-full border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300"
+              className="mb-6 rounded-xl border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300 font-medium"
             >
-              <Sparkles className="mr-1.5 size-3.5" /> Independent
+              <Sparkles className="mr-1.5 size-3.5" aria-hidden="true" /> Independent
               tax-assistance prototype
             </Badge>
             <h1 className="max-w-xl text-4xl font-bold leading-[1.08] tracking-[-0.045em] text-slate-950 dark:text-white sm:text-5xl lg:text-[3.65rem]">
-              Your income tax return, explained one step at a time.
+              EaseITR guides individual taxpayers through income details, tax estimates, regime comparison, document extraction, and ITR form recommendations.
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-              Answer plain-language questions, understand your income picture
-              and see which ITR form may apply—without getting lost in tax
-              jargon.
+              Answer plain-language questions, understand your income picture, estimate tax liability, compare tax regimes, assist with document extraction, and see which ITR form may apply—without tax jargon.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button
                 size="lg"
                 asChild
-                className="h-12 rounded-xl bg-emerald-700 px-6 text-base text-white shadow-[0_8px_24px_rgba(4,120,87,0.2)] hover:bg-emerald-800"
+                className="h-12 rounded-xl bg-emerald-700 px-6 text-base text-white hover:bg-emerald-800"
               >
                 <Link href="/assessment">
-                  Start tax assessment <ArrowRight />
+                  Start tax assessment <ArrowRight className="ml-2 size-4" aria-hidden="true" />
                 </Link>
               </Button>
               <Button
@@ -152,14 +101,13 @@ export default function HomePage() {
             </div>
             <div className="mt-7 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-600 dark:text-slate-400">
               <span className="flex items-center gap-2">
-                <Check className="size-4 text-emerald-600" /> No sign-up needed
+                <Check className="size-4 text-emerald-600" aria-hidden="true" /> No sign-up needed
               </span>
               <span className="flex items-center gap-2">
-                <Check className="size-4 text-emerald-600" /> Save on this
-                device
+                <Check className="size-4 text-emerald-600" aria-hidden="true" /> Save on this device
               </span>
               <span className="flex items-center gap-2">
-                <Check className="size-4 text-emerald-600" /> Clear explanations
+                <Check className="size-4 text-emerald-600" aria-hidden="true" /> Clear explanations
               </span>
             </div>
           </div>
@@ -168,8 +116,7 @@ export default function HomePage() {
             className="relative mx-auto w-full max-w-xl"
             aria-label="Sample assessment summary preview"
           >
-            <div className="absolute -inset-4 -z-10 rounded-[2rem] bg-emerald-100/60 blur-2xl dark:bg-emerald-950/40" />
-            <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-[0_30px_80px_rgba(15,23,42,0.13)] dark:border-slate-700 dark:bg-slate-900">
+            <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900">
               <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 dark:border-slate-800 sm:px-6">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
@@ -179,8 +126,8 @@ export default function HomePage() {
                     Assessment year 2026–27
                   </p>
                 </div>
-                <Badge className="rounded-full bg-emerald-100 text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-950 dark:text-emerald-300">
-                  72% complete
+                <Badge className="rounded-xl bg-emerald-100 text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-950 dark:text-emerald-300">
+                  70% complete
                 </Badge>
               </div>
               <div className="space-y-5 p-5 sm:p-6">
@@ -189,10 +136,10 @@ export default function HomePage() {
                     <span className="text-slate-600 dark:text-slate-300">
                       Your progress
                     </span>
-                    <span className="font-semibold">6 of 9 sections</span>
+                    <span className="font-semibold">7 of 10 steps</span>
                   </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-                    <div className="h-full w-[72%] rounded-full bg-emerald-600" />
+                  <div className="h-2 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
+                    <div className="h-full w-[70%] rounded-xl bg-emerald-600" />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -213,23 +160,21 @@ export default function HomePage() {
                     </p>
                   </div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 p-4 dark:border-slate-700">
+                <div className="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
                   <div className="flex items-start gap-3">
                     <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950">
-                      <FileText className="size-4" />
+                      <FileText className="size-4" aria-hidden="true" />
                     </span>
                     <div className="min-w-0 flex-1">
                       <p className="font-semibold">Why ITR-2 may apply</p>
                       <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                        You reported salary income and capital gains, with no
-                        business income.
+                        You reported salary income and capital gains, with no business income.
                       </p>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-start gap-2 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
-                  <HelpCircle className="mt-0.5 size-4 shrink-0" /> Estimates
-                  are for guidance only and are not a filed tax return.
+                  <HelpCircle className="mt-0.5 size-4 shrink-0" aria-hidden="true" /> Estimates are for guidance only and are not a filed tax return.
                 </div>
               </div>
             </div>
@@ -242,13 +187,12 @@ export default function HomePage() {
         className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8"
       >
         <div className="max-w-2xl">
-          <p className="eyebrow">A clearer process</p>
-          <h2 className="section-title">
+          <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400">A clearer process</p>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             From scattered details to a useful next step
           </h2>
-          <p className="section-copy">
-            We break the assessment into manageable sections and explain what
-            each answer changes.
+          <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
+            We break the assessment into 10 manageable sections and explain what each answer changes.
           </p>
         </div>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
@@ -256,12 +200,12 @@ export default function HomePage() {
             [
               "01",
               "Tell us about your income",
-              "Work through one topic at a time, with help beside unfamiliar questions.",
+              "Work through short focused steps, with help beside unfamiliar questions.",
             ],
             [
               "02",
               "Review the full picture",
-              "Check your entries, resolve warnings and revisit answers you marked as uncertain.",
+              "Check your entries, resolve warnings and revisit any skipped sections.",
             ],
             [
               "03",
@@ -271,7 +215,7 @@ export default function HomePage() {
           ].map(([number, title, copy]) => (
             <article
               key={number}
-              className="rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_12px_32px_rgba(15,23,42,0.04)] dark:border-slate-800 dark:bg-slate-900"
+              className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
             >
               <span className="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400">
                 {number}
@@ -285,17 +229,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-50/80 py-20 dark:border-slate-800 dark:bg-slate-950/40">
+      <section className="border-y border-slate-200 bg-slate-50 py-20 dark:border-slate-800 dark:bg-slate-900/50">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
-              <p className="eyebrow">Built around real life</p>
-              <h2 className="section-title">
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400">Built around real life</p>
+              <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
                 Bring different kinds of income into one view
               </h2>
-              <p className="section-copy">
-                The prototype supports common combinations for resident
-                individuals and flags situations that need specialist review.
+              <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
+                The prototype supports common combinations for resident individuals and flags situations that need specialist review.
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -304,7 +247,7 @@ export default function HomePage() {
                   key={label}
                   className="flex min-h-28 flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
                 >
-                  <Icon className="size-5 text-emerald-700 dark:text-emerald-400" />
+                  <Icon className="size-5 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
                   <span className="mt-5 text-sm font-semibold text-slate-800 dark:text-slate-200">
                     {label}
                   </span>
@@ -335,7 +278,7 @@ export default function HomePage() {
         ].map(({ icon: Icon, title, copy }) => (
           <article key={title} className="p-2">
             <span className="grid size-11 place-items-center rounded-2xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-              <Icon className="size-5" />
+              <Icon className="size-5" aria-hidden="true" />
             </span>
             <h3 className="mt-5 text-lg font-bold">{title}</h3>
             <p className="mt-2 leading-7 text-slate-600 dark:text-slate-400">
@@ -346,7 +289,7 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-        <div className="grid gap-8 overflow-hidden rounded-[2rem] bg-slate-950 px-6 py-10 text-white sm:px-10 lg:grid-cols-[1fr_0.8fr] lg:items-center lg:px-14 lg:py-14">
+        <div className="grid gap-8 overflow-hidden rounded-[2rem] bg-slate-900 px-6 py-10 text-white sm:px-10 lg:grid-cols-[1fr_0.8fr] lg:items-center lg:px-14 lg:py-14">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-400">
               Your data, your choice
@@ -355,9 +298,7 @@ export default function HomePage() {
               Explore without handing over your identity.
             </h2>
             <p className="mt-4 max-w-2xl leading-7 text-slate-300">
-              Use sample data or save your answers locally on this device.
-              Sensitive placeholders are masked, and you can remove stored
-              assessment data whenever you want.
+              Use sample data or save your answers locally on this device. Sensitive placeholders are masked, and you can remove stored assessment data whenever you want.
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
@@ -368,9 +309,9 @@ export default function HomePage() {
             ].map((item) => (
               <div
                 key={item}
-                className="flex items-center gap-3 rounded-xl bg-white/7 px-4 py-3 text-sm font-medium"
+                className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 text-sm font-medium"
               >
-                <Check className="size-4 text-emerald-400" />
+                <Check className="size-4 text-emerald-400" aria-hidden="true" />
                 {item}
               </div>
             ))}
@@ -380,8 +321,8 @@ export default function HomePage() {
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 pb-20 sm:px-6 lg:grid-cols-[0.65fr_1fr] lg:px-8">
         <div>
-          <p className="eyebrow">Common questions</p>
-          <h2 className="section-title">A little clarity before you begin</h2>
+          <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400">Common questions</p>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">A little clarity before you begin</h2>
         </div>
         <Accordion
           type="single"
@@ -417,7 +358,7 @@ export default function HomePage() {
             className="h-12 rounded-xl bg-emerald-700 px-6 text-white hover:bg-emerald-800"
           >
             <Link href="/assessment">
-              Start tax assessment <ArrowRight />
+              Start tax assessment <ArrowRight className="ml-2 size-4" aria-hidden="true" />
             </Link>
           </Button>
         </div>
@@ -433,14 +374,11 @@ export default function HomePage() {
             >
               <Link href="/settings">Privacy</Link>
               <Link href="/help">Terms</Link>
-              <Link href="mailto:hello@example.com">Contact</Link>
+              <span className="text-slate-400 dark:text-slate-500">Contact details coming later</span>
             </nav>
           </div>
           <div className="mt-8 border-t border-slate-200 pt-6 text-sm leading-6 text-slate-500 dark:border-slate-800 dark:text-slate-400">
-            EaseITR is an independent educational prototype and is not
-            affiliated with the Government of India or the Income Tax
-            Department. Estimates and form recommendations are not legal or tax
-            advice.
+            EaseITR is an independent educational prototype and is not affiliated with the Government of India or the Income Tax Department. Estimates and form recommendations are not legal or tax advice.
           </div>
         </div>
       </footer>

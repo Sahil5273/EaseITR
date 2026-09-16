@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   Clock3,
   FileCheck2,
@@ -10,6 +11,12 @@ import { AppShell } from "@/components/easeitr/app-shell";
 import { AssessmentIntroActions } from "@/components/easeitr/assessment-intro-actions";
 import { InfoNote, WarningBanner } from "@/components/easeitr/feedback";
 import { Badge } from "@/components/ui/badge";
+
+export const metadata: Metadata = {
+  title: "Tax Assessment Questionnaire",
+  description:
+    "Answer guided questions to build your income-tax profile and receive explainable ITR recommendations.",
+};
 
 export default function AssessmentIntroPage() {
   return (

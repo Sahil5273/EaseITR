@@ -1,8 +1,16 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, FileText, HelpCircle, Menu, Settings2 } from "lucide-react";
+import {
+  BarChart3,
+  FileText,
+  HelpCircle,
+  Home,
+  Menu,
+  Settings2,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +23,8 @@ import { cn } from "@/lib/utils";
 import { Brand } from "./brand";
 import { ThemeToggle } from "./theme-toggle";
 
-const navItems = [
+export const navItems = [
+  { href: "/", label: "Home", icon: Home },
   { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
   { href: "/assessment", label: "Assessment", icon: FileText },
   { href: "/documents", label: "Documents", icon: FileText },
@@ -23,14 +32,22 @@ const navItems = [
   { href: "/settings", label: "Settings", icon: Settings2 },
 ];
 
-function Navigation({ mobile = false }: { mobile?: boolean }) {
+export function Navigation({
+  mobile = false,
+  onItemClick,
+}: {
+  mobile?: boolean;
+  onItemClick?: () => void;
+}) {
   const pathname = usePathname();
+  const items = mobile ? navItems : navItems.filter((i) => i.href !== "/");
+
   return (
     <nav
       className={cn("flex", mobile ? "flex-col gap-1" : "items-center gap-1")}
       aria-label={mobile ? "Mobile navigation" : "Application navigation"}
     >
-      {navItems.map(({ href, label, icon: Icon }) => {
+      {items.map(({ href, label, icon: Icon }) => {
         const active =
           pathname === href ||
           (href === "/assessment" && pathname.startsWith("/assessment/"));
@@ -39,20 +56,64 @@ function Navigation({ mobile = false }: { mobile?: boolean }) {
             key={href}
             variant="ghost"
             asChild
+            onClick={onItemClick}
             className={cn(
-              "justify-start rounded-xl",
+              "justify-start rounded-xl text-sm font-medium",
               active &&
-                "bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300",
+                "bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-semibold",
             )}
           >
-            <Link href={href}>
-              <Icon />
+            <Link href={href} aria-current={active ? "page" : undefined}>
+              <Icon className="size-4 mr-2" aria-hidden="true" />
               {label}
             </Link>
           </Button>
         );
       })}
     </nav>
+  );
+}
+
+export function AppShellHeader() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-4 px-4 sm:px-6 lg:px-8">
+        <Brand />
+        <div className="ml-auto hidden lg:block">
+          <Navigation />
+        </div>
+        <div className="ml-auto flex items-center gap-1 lg:ml-0">
+          <ThemeToggle />
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden rounded-xl"
+                aria-label="Open navigation menu"
+              >
+                <Menu className="size-5" aria-hidden="true" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-[min(88vw,340px)] p-6 bg-white dark:bg-slate-900"
+            >
+              <SheetTitle className="sr-only">Navigation menu</SheetTitle>
+              <Brand />
+              <div className="mt-8">
+                <Navigation mobile onItemClick={() => setOpen(false)} />
+              </div>
+              <p className="mt-8 border-t border-slate-100 pt-5 text-xs leading-6 text-slate-500 dark:border-slate-800">
+                EaseITR is an independent tax-assistance prototype.
+              </p>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </div>
+    </header>
   );
 }
 
@@ -64,41 +125,8 @@ export function AppShell({
   width?: "wide" | "reading";
 }) {
   return (
-    <div className="min-h-screen bg-slate-50/70 dark:bg-slate-950">
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-background/95 backdrop-blur dark:border-slate-800">
-        <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-4 px-4 sm:px-6 lg:px-8">
-          <Brand />
-          <div className="ml-auto hidden lg:block">
-            <Navigation />
-          </div>
-          <div className="ml-auto flex items-center gap-1 lg:ml-0">
-            <ThemeToggle />
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="lg:hidden"
-                  aria-label="Open navigation"
-                >
-                  <Menu />
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-[min(88vw,340px)] p-6">
-                <SheetTitle className="sr-only">Navigation</SheetTitle>
-                <Brand />
-                <div className="mt-8">
-                  <Navigation mobile />
-                </div>
-                <p className="mt-8 border-t pt-5 text-sm leading-6 text-slate-500">
-                  Independent tax-assistance prototype. Estimates are not
-                  professional tax advice.
-                </p>
-              </SheetContent>
-            </Sheet>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
+      <AppShellHeader />
       <main
         className={cn(
           "mx-auto w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10",

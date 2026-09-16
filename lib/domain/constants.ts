@@ -3,15 +3,16 @@ import type { AssessmentData } from "./types";
 export const STORAGE_KEY = "easeitr-assessment-v1";
 
 export const WIZARD_STEPS = [
-  { slug: "profile", label: "Basic profile", shortLabel: "Profile" },
-  { slug: "salary", label: "Salary & pension", shortLabel: "Salary" },
-  { slug: "property", label: "House property", shortLabel: "Property" },
-  { slug: "capital-gains", label: "Capital gains", shortLabel: "Gains" },
-  { slug: "trading", label: "Trading activity", shortLabel: "Trading" },
-  { slug: "business", label: "Business & profession", shortLabel: "Business" },
-  { slug: "other-income", label: "Other income", shortLabel: "Other" },
-  { slug: "deductions", label: "Deductions & taxes", shortLabel: "Taxes" },
-  { slug: "review", label: "Review", shortLabel: "Review" },
+  { slug: "profile", label: "Basic taxpayer profile", shortLabel: "Profile", optional: false },
+  { slug: "salary", label: "Salary & pension", shortLabel: "Salary", optional: false },
+  { slug: "property", label: "House property", shortLabel: "Property", optional: true },
+  { slug: "capital-gains", label: "Capital gains", shortLabel: "Gains", optional: true },
+  { slug: "trading", label: "Trading activity", shortLabel: "Trading", optional: true },
+  { slug: "business", label: "Business & profession", shortLabel: "Business", optional: true },
+  { slug: "other-income", label: "Other income", shortLabel: "Other", optional: true },
+  { slug: "deductions", label: "Deductions", shortLabel: "Deductions", optional: true },
+  { slug: "tax-payments", label: "TDS, TCS & taxes paid", shortLabel: "Taxes paid", optional: true },
+  { slug: "review", label: "Review & confirm", shortLabel: "Review", optional: false },
 ] as const;
 
 export type WizardStepSlug = (typeof WIZARD_STEPS)[number]["slug"];
@@ -102,6 +103,8 @@ export const EMPTY_ASSESSMENT: AssessmentData = {
   taxPayments: { tds: 0, tcs: 0, advanceTax: 0, selfAssessmentTax: 0 },
   regimePreference: "undecided",
   reviewFlags: [],
+  skippedSections: [],
+  sectionStatuses: {},
   confirmed: false,
   updatedAt: "",
 };

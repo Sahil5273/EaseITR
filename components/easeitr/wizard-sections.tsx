@@ -21,7 +21,7 @@ import {
 } from "./form-controls";
 import { InfoNote, UnsupportedCaseBanner, WarningBanner } from "./feedback";
 import type { AssessmentData } from "@/lib/domain/types";
-import type { WizardStepSlug } from "@/lib/domain/constants";
+import { WIZARD_STEPS, type WizardStepSlug } from "@/lib/domain/constants";
 import { activitySchema, type ActivityFormValues } from "@/lib/domain/schemas";
 
 export type AssessmentUpdater = (
@@ -716,6 +716,34 @@ export function DeductionsSection({
         item.id === id ? { ...item, amount } : item,
       ),
     }));
+
+  return (
+    <QuestionCard
+      title="Common deductions"
+      description="Enter amounts paid or invested. Eligibility limits are not enforced in this prototype."
+      why="Many deductions are available only under the old regime, so they help make the comparison meaningful."
+    >
+      <Grid>
+        {data.deductions.map((item) => (
+          <CurrencyInput
+            key={item.id}
+            label={`${item.section} — ${item.label}`}
+            value={item.amount}
+            onChange={(value) => updateDeduction(item.id, value)}
+          />
+        ))}
+      </Grid>
+    </QuestionCard>
+  );
+}
+
+export function TaxPaymentsSection({
+  data,
+  update,
+}: {
+  data: AssessmentData;
+  update: AssessmentUpdater;
+}) {
   const setPayment = <K extends keyof AssessmentData["taxPayments"]>(
     key: K,
     value: number,
@@ -724,69 +752,52 @@ export function DeductionsSection({
       ...current,
       taxPayments: { ...current.taxPayments, [key]: value },
     }));
+
   return (
-    <div className="space-y-5">
-      <QuestionCard
-        title="Common deductions"
-        description="Enter amounts paid or invested. Eligibility limits are not enforced in this prototype."
-        why="Many deductions are available only under the old regime, so they help make the comparison meaningful."
-      >
-        <Grid>
-          {data.deductions.map((item) => (
-            <CurrencyInput
-              key={item.id}
-              label={`${item.section} — ${item.label}`}
-              value={item.amount}
-              onChange={(value) => updateDeduction(item.id, value)}
-            />
-          ))}
-        </Grid>
-      </QuestionCard>
-      <QuestionCard
-        title="Taxes already paid"
-        description="These payments are offset against the sample tax estimate."
-      >
-        <Grid>
-          <CurrencyInput
-            label="TDS"
-            value={data.taxPayments.tds}
-            onChange={(value) => setPayment("tds", value)}
-          />
-          <CurrencyInput
-            label="TCS"
-            value={data.taxPayments.tcs}
-            onChange={(value) => setPayment("tcs", value)}
-          />
-          <CurrencyInput
-            label="Advance tax"
-            value={data.taxPayments.advanceTax}
-            onChange={(value) => setPayment("advanceTax", value)}
-          />
-          <CurrencyInput
-            label="Self-assessment tax"
-            value={data.taxPayments.selfAssessmentTax}
-            onChange={(value) => setPayment("selfAssessmentTax", value)}
-          />
-          <SelectField
-            label="Regime preference"
-            value={data.regimePreference}
-            onChange={(event) =>
-              update((current) => ({
-                ...current,
-                regimePreference: event.target
-                  .value as AssessmentData["regimePreference"],
-              }))
-            }
-          >
-            <NativeSelectOption value="undecided">
-              Show me a comparison
-            </NativeSelectOption>
-            <NativeSelectOption value="new">New regime</NativeSelectOption>
-            <NativeSelectOption value="old">Old regime</NativeSelectOption>
-          </SelectField>
-        </Grid>
-      </QuestionCard>
-    </div>
+    <QuestionCard
+      title="TDS, TCS & taxes already paid"
+      description="These payments are offset against the sample tax estimate. Skipping tax payments may make the estimated payable amount or refund inaccurate."
+    >
+      <Grid>
+        <CurrencyInput
+          label="TDS"
+          value={data.taxPayments.tds}
+          onChange={(value) => setPayment("tds", value)}
+        />
+        <CurrencyInput
+          label="TCS"
+          value={data.taxPayments.tcs}
+          onChange={(value) => setPayment("tcs", value)}
+        />
+        <CurrencyInput
+          label="Advance tax"
+          value={data.taxPayments.advanceTax}
+          onChange={(value) => setPayment("advanceTax", value)}
+        />
+        <CurrencyInput
+          label="Self-assessment tax"
+          value={data.taxPayments.selfAssessmentTax}
+          onChange={(value) => setPayment("selfAssessmentTax", value)}
+        />
+        <SelectField
+          label="Regime preference"
+          value={data.regimePreference}
+          onChange={(event) =>
+            update((current) => ({
+              ...current,
+              regimePreference: event.target
+                .value as AssessmentData["regimePreference"],
+            }))
+          }
+        >
+          <NativeSelectOption value="undecided">
+            Show me a comparison
+          </NativeSelectOption>
+          <NativeSelectOption value="new">New regime</NativeSelectOption>
+          <NativeSelectOption value="old">Old regime</NativeSelectOption>
+        </SelectField>
+      </Grid>
+    </QuestionCard>
   );
 }
 
@@ -841,8 +852,15 @@ const reviewSections: Array<{
   },
   {
     slug: "deductions",
-    label: "Deductions & taxes",
-    description: (data) => `${data.regimePreference} regime preference`,
+    label: "Deductions",
+    description: (data) =>
+      `${data.deductions.filter((d) => d.amount > 0).length} deduction amounts entered`,
+  },
+  {
+    slug: "tax-payments",
+    label: "TDS, TCS & taxes paid",
+    description: (data) =>
+      `TDS: ₹${data.taxPayments.tds.toLocaleString("en-IN")} · ${data.regimePreference} regime preference`,
   },
 ];
 
@@ -859,6 +877,14 @@ export function ReviewSection({
     data.profile.hasForeignIncome;
   const missing =
     data.incomeSources.includes("salary") && data.salary.grossSalary <= 0;
+
+  const skippedNames = (data.skippedSections || [])
+    .map(
+      (slug) =>
+        WIZARD_STEPS.find((s) => s.slug === slug)?.label || slug,
+    )
+    .join(", ");
+
   return (
     <div className="space-y-5">
       <QuestionCard
@@ -866,27 +892,44 @@ export function ReviewSection({
         description="Check the summary and edit any section before generating sample results."
       >
         <div className="divide-y divide-slate-100 dark:divide-slate-800">
-          {reviewSections.map((section) => (
-            <div
-              key={section.slug}
-              className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0"
-            >
-              <div>
-                <p className="font-semibold">{section.label}</p>
-                <p className="mt-1 text-sm capitalize text-slate-500">
-                  {section.description(data)}
-                </p>
+          {reviewSections.map((section) => {
+            const isSkipped = data.skippedSections?.includes(section.slug);
+            return (
+              <div
+                key={section.slug}
+                className="flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0"
+              >
+                <div>
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold">{section.label}</p>
+                    {isSkipped && (
+                      <span className="rounded-md border border-amber-300 bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-800 dark:bg-amber-950 dark:text-amber-200">
+                        Skipped
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-sm capitalize text-slate-500">
+                    {isSkipped ? "Section skipped by user" : section.description(data)}
+                  </p>
+                </div>
+                <Button asChild size="sm" variant="ghost">
+                  <Link href={`/assessment/${section.slug}`}>
+                    <Edit3 className="size-4 mr-1.5" aria-hidden="true" />
+                    Edit
+                  </Link>
+                </Button>
               </div>
-              <Button asChild size="sm" variant="ghost">
-                <Link href={`/assessment/${section.slug}`}>
-                  <Edit3 />
-                  Edit
-                </Link>
-              </Button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </QuestionCard>
+      {data.skippedSections && data.skippedSections.length > 0 && (
+        <WarningBanner
+          title={`${data.skippedSections.length} section${data.skippedSections.length > 1 ? "s" : ""} intentionally skipped`}
+        >
+          Skipped: {skippedNames}. Skipping sections may reduce the accuracy of your tax calculation and ITR form recommendation.
+        </WarningBanner>
+      )}
       {data.reviewFlags.length > 0 && (
         <WarningBanner
           title={`${data.reviewFlags.length} section${data.reviewFlags.length > 1 ? "s" : ""} marked for review`}
@@ -957,6 +1000,8 @@ export function ActiveWizardSection({
       return <OtherIncomeSection data={data} update={update} />;
     case "deductions":
       return <DeductionsSection data={data} update={update} />;
+    case "tax-payments":
+      return <TaxPaymentsSection data={data} update={update} />;
     case "review":
       return <ReviewSection data={data} update={update} />;
   }

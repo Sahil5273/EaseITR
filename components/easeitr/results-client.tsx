@@ -32,6 +32,8 @@ import {
 import { sampleProfiles } from "@/lib/services/mocks/seed-data";
 import { useAssessment } from "@/lib/state/assessment-context";
 
+import { WIZARD_STEPS } from "@/lib/domain/constants";
+
 export function RuleExplanationList({ rules }: { rules: RuleExplanation[] }) {
   return (
     <div className="space-y-3">
@@ -41,11 +43,11 @@ export function RuleExplanationList({ rules }: { rules: RuleExplanation[] }) {
           className="flex gap-3 rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
         >
           {rule.outcome === "supports" ? (
-            <Check className="mt-0.5 size-5 shrink-0 text-emerald-600" />
+            <Check className="mt-0.5 size-5 shrink-0 text-emerald-600" aria-hidden="true" />
           ) : rule.outcome === "review" ? (
-            <AlertTriangle className="mt-0.5 size-5 shrink-0 text-amber-600" />
+            <AlertTriangle className="mt-0.5 size-5 shrink-0 text-amber-600" aria-hidden="true" />
           ) : (
-            <X className="mt-0.5 size-5 shrink-0 text-slate-400" />
+            <X className="mt-0.5 size-5 shrink-0 text-slate-400" aria-hidden="true" />
           )}
           <div>
             <p className="font-semibold">{rule.title}</p>
@@ -65,7 +67,7 @@ export function ITRRecommendationCard({
   recommendation: ITRRecommendation;
 }) {
   return (
-    <article className="overflow-hidden rounded-3xl border border-emerald-200 bg-white shadow-[0_18px_50px_rgba(4,120,87,0.08)] dark:border-emerald-900 dark:bg-slate-900">
+    <article className="overflow-hidden rounded-3xl border border-emerald-200 bg-white shadow-sm dark:border-emerald-900 dark:bg-slate-900">
       <div className="bg-emerald-700 px-6 py-5 text-white">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -76,7 +78,7 @@ export function ITRRecommendationCard({
               {recommendation.form}
             </p>
           </div>
-          <Badge className="rounded-full bg-white/15 text-white hover:bg-white/15">
+          <Badge className="rounded-xl bg-white/15 text-white hover:bg-white/15">
             {recommendation.confidence === "professional-review"
               ? "Review required"
               : `${recommendation.confidence} confidence`}
@@ -127,12 +129,19 @@ export function ResultsClient() {
     assessment.profile.hasForeignAssets ||
     assessment.profile.hasForeignIncome;
 
+  const skippedNames = (assessment.skippedSections || [])
+    .map(
+      (slug) =>
+        WIZARD_STEPS.find((s) => s.slug === slug)?.label || slug,
+    )
+    .join(", ");
+
   return (
     <AppShell width="wide">
       <div className="print:max-w-none">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <Badge variant="outline" className="rounded-full">
+            <Badge variant="outline" className="rounded-xl">
               Sample assessment result
             </Badge>
             <h1 className="mt-3 text-3xl font-bold tracking-[-0.04em] sm:text-4xl">
@@ -144,15 +153,25 @@ export function ResultsClient() {
             </p>
           </div>
           <div className="flex flex-wrap gap-2 print:hidden">
-            <Button variant="outline" onClick={() => window.print()}>
-              <Download />
+            <Button variant="outline" className="rounded-xl" onClick={() => window.print()}>
+              <Download className="mr-1.5 size-4" aria-hidden="true" />
               Download / print summary
             </Button>
-            <Button variant="outline" asChild>
+            <Button variant="outline" className="rounded-xl" asChild>
               <Link href="/assessment/review">Edit information</Link>
             </Button>
           </div>
         </div>
+
+        {assessment.skippedSections && assessment.skippedSections.length > 0 && (
+          <div className="mt-5">
+            <WarningBanner
+              title={`${assessment.skippedSections.length} section${assessment.skippedSections.length > 1 ? "s" : ""} were skipped`}
+            >
+              Skipped: {skippedNames}. Skipping sections may reduce the accuracy of your tax calculation and ITR form recommendation.
+            </WarningBanner>
+          </div>
+        )}
         <section className="mt-7 grid gap-5 xl:grid-cols-[0.85fr_1.15fr]">
           {recommendation ? (
             <ITRRecommendationCard recommendation={recommendation} />

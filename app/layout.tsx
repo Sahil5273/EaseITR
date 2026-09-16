@@ -3,15 +3,26 @@ import "./globals.css";
 import { Providers } from "./providers";
 
 export const metadata: Metadata = {
-  title: "EaseITR — Guided income-tax assessment",
+  title: {
+    default: "EaseITR | Guided Tax Assessment and ITR Form Assistance",
+    template: "%s | EaseITR",
+  },
   description:
-    "An independent, explainable prototype that helps Indian taxpayers organise information and understand which ITR form may apply.",
+    "EaseITR guides individual taxpayers through their income details, provides estimated tax comparisons, and explains which ITR form may apply.",
+  applicationName: "EaseITR",
+  openGraph: {
+    title: "EaseITR | Guided Tax Assessment and ITR Form Assistance",
+    description:
+      "EaseITR guides individual taxpayers through their income details, provides estimated tax comparisons, and explains which ITR form may apply.",
+    siteName: "EaseITR",
+    type: "website",
+  },
   other: {
     "codex-preview": "development",
   },
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
   },
 };
 

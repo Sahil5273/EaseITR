@@ -227,6 +227,12 @@ export interface RegimeComparison {
   difference: number;
 }
 
+export type SectionStatus =
+  | "not-started"
+  | "in-progress"
+  | "completed"
+  | "skipped";
+
 export interface AssessmentData {
   id: string;
   status: AssessmentStatus;
@@ -243,6 +249,8 @@ export interface AssessmentData {
   taxPayments: TaxPayment;
   regimePreference: Regime;
   reviewFlags: string[];
+  skippedSections: string[];
+  sectionStatuses: Record<string, SectionStatus>;
   confirmed: boolean;
   updatedAt: string;
 }
