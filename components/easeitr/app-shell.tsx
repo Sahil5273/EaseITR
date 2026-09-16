@@ -58,10 +58,9 @@ export function Navigation({
             asChild
             onClick={onItemClick}
             className={cn(
-              "justify-start rounded-lg text-sm font-medium transition-colors",
-              active
-                ? "bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800"
-                : "text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white",
+              "justify-start rounded-xl text-sm font-medium",
+              active &&
+                "bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-semibold",
             )}
           >
             <Link href={href} aria-current={active ? "page" : undefined}>
@@ -79,8 +78,8 @@ export function AppShellHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center gap-4 px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
+      <div className="mx-auto flex h-16 w-full max-w-[1600px] items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Brand />
         <div className="ml-auto hidden lg:block">
           <Navigation />
@@ -92,7 +91,7 @@ export function AppShellHeader() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden rounded-lg"
+                className="lg:hidden rounded-xl"
                 aria-label="Open navigation menu"
               >
                 <Menu className="size-5" aria-hidden="true" />
@@ -100,14 +99,14 @@ export function AppShellHeader() {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-[min(88vw,340px)] p-6 bg-white border-l border-slate-200 dark:bg-slate-950 dark:border-slate-800"
+              className="w-[min(88vw,340px)] p-6 bg-card dark:bg-slate-900"
             >
               <SheetTitle className="sr-only">Navigation menu</SheetTitle>
               <Brand />
               <div className="mt-8">
                 <Navigation mobile onItemClick={() => setOpen(false)} />
               </div>
-              <p className="mt-8 border-t border-slate-100 pt-5 text-xs leading-relaxed text-slate-500 dark:border-slate-800 dark:text-slate-400">
+              <p className="mt-8 border-t border-slate-100 pt-5 text-xs leading-6 text-slate-500 dark:border-slate-800">
                 EaseITR is an independent tax-assistance prototype.
               </p>
             </SheetContent>
@@ -123,15 +122,19 @@ export function AppShell({
   width = "wide",
 }: {
   children: React.ReactNode;
-  width?: "wide" | "reading";
+  width?: "wide" | "reading" | "full";
 }) {
   return (
-    <div className="min-h-screen bg-slate-50/80 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="min-h-screen bg-background text-foreground">
       <AppShellHeader />
       <main
         className={cn(
-          "mx-auto w-full px-4 py-8 sm:px-6 lg:px-8 lg:py-10",
-          width === "wide" ? "max-w-[1440px]" : "max-w-5xl",
+          "mx-auto w-full py-6 sm:py-8 lg:py-8",
+          width === "full"
+            ? "max-w-full px-4 sm:px-6 lg:px-8"
+            : width === "wide"
+            ? "max-w-[1600px] px-4 sm:px-6 lg:px-8"
+            : "max-w-5xl px-4 sm:px-6 lg:px-8",
         )}
       >
         {children}

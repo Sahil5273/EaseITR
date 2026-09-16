@@ -5,7 +5,7 @@ import { AppShellHeader } from "@/components/easeitr/app-shell";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       <AppShellHeader />
       <main className="flex-1 mx-auto flex max-w-4xl flex-col items-center justify-center px-4 py-16 text-center sm:px-6 lg:px-8">
         <div className="grid size-16 place-items-center rounded-2xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 mb-6">

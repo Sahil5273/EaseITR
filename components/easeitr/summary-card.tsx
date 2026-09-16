@@ -15,7 +15,7 @@ export function SummaryCard({
   tone?: "neutral" | "positive" | "warning";
 }) {
   return (
-    <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900">
+    <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_24px_rgba(15,23,42,0.035)] dark:border-slate-800 dark:bg-slate-900">
       <div className="flex items-start justify-between gap-4">
         <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
           {label}
@@ -35,14 +35,14 @@ export function SummaryCard({
       </div>
       <p
         className={cn(
-          "mt-3 text-2xl font-bold tracking-[-0.03em] text-slate-900 dark:text-white",
+          "mt-3 text-2xl font-bold tracking-[-0.03em]",
           tone === "positive" && "text-emerald-700 dark:text-emerald-400",
           tone === "warning" && "text-amber-700 dark:text-amber-400",
         )}
       >
         {value}
       </p>
-      {note && <p className="mt-2 text-xs leading-5 text-slate-500 dark:text-slate-400">{note}</p>}
+      {note && <p className="mt-2 text-xs leading-5 text-slate-500">{note}</p>}
     </article>
   );
 }

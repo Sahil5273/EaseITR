@@ -13,9 +13,9 @@ export function ProgressSidebar({ current }: { current: WizardStepSlug }) {
   const currentIndex = WIZARD_STEPS.findIndex((step) => step.slug === current);
 
   return (
-    <aside className="hidden w-64 shrink-0 lg:block">
-      <div className="sticky top-24 rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-        <p className="px-2 pb-3 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+    <aside className="hidden w-64 xl:w-72 shrink-0 lg:block">
+      <div className="sticky top-24 rounded-3xl border border-border bg-card p-4 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.04)] dark:border-slate-800 dark:bg-slate-900">
+        <p className="px-3 pb-3 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
           Assessment progress
         </p>
         <nav aria-label="Assessment steps" className="space-y-1">
@@ -38,10 +38,10 @@ export function ProgressSidebar({ current }: { current: WizardStepSlug }) {
                 href={`/assessment/${step.slug}`}
                 aria-current={isCurrent ? "step" : undefined}
                 className={cn(
-                  "flex items-center justify-between rounded-md px-3 py-2 text-sm transition-colors",
+                  "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition-colors",
                   isCurrent
-                    ? "bg-emerald-50 font-semibold text-emerald-800 border border-emerald-200/80 dark:bg-emerald-950/80 dark:text-emerald-300 dark:border-emerald-800"
-                    : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100",
+                    ? "bg-emerald-50 font-semibold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200"
+                    : "text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800",
                 )}
               >
                 <div className="flex items-center gap-2.5 min-w-0 pr-1">
@@ -52,9 +52,7 @@ export function ProgressSidebar({ current }: { current: WizardStepSlug }) {
                         ? "border-emerald-600 bg-emerald-600 text-white"
                         : status === "skipped"
                         ? "border-amber-500 bg-amber-50 text-amber-800 dark:bg-amber-950 dark:text-amber-200"
-                        : isCurrent
-                        ? "border-emerald-600 bg-white text-emerald-700 font-bold dark:bg-slate-900 dark:text-emerald-400"
-                        : "border-slate-300 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400",
+                        : "border-slate-300 dark:border-slate-600",
                     )}
                   >
                     {status === "completed" ? (
@@ -68,7 +66,7 @@ export function ProgressSidebar({ current }: { current: WizardStepSlug }) {
                   <span className="truncate">{step.shortLabel}</span>
                 </div>
                 {status === "skipped" && (
-                  <Badge variant="outline" className="text-[10px] px-1.5 py-0 rounded-md border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300">
+                  <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-amber-300 bg-amber-50 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
                     Skipped
                   </Badge>
                 )}
@@ -93,19 +91,19 @@ export function WizardProgressBar({ current }: { current: WizardStepSlug }) {
   return (
     <div className="mb-6 lg:hidden">
       <div className="mb-2 flex items-center justify-between text-sm">
-        <span className="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+        <span className="font-semibold flex items-center gap-2">
           {WIZARD_STEPS[index].label}
           {isSkipped && (
-            <Badge variant="outline" className="text-xs rounded-md border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-800 dark:bg-amber-950 dark:text-amber-300">
+            <Badge variant="outline" className="text-xs border-amber-300 bg-amber-50 text-amber-800 dark:bg-amber-950">
               Skipped
             </Badge>
           )}
         </span>
-        <span className="text-slate-500 dark:text-slate-400 text-xs">
+        <span className="text-slate-500 text-xs">
           Step {index + 1} of {WIZARD_STEPS.length}
         </span>
       </div>
-      <Progress value={percent} className="h-2 rounded-md bg-slate-100 dark:bg-slate-800" />
+      <Progress value={percent} className="h-2 rounded-xl" />
     </div>
   );
 }

@@ -20,20 +20,20 @@ export const metadata: Metadata = {
 
 export default function AssessmentIntroPage() {
   return (
-    <AppShell width="reading">
-      <div className="grid gap-8 lg:grid-cols-[1fr_0.75fr] lg:items-start">
-        <div>
+    <AppShell width="full">
+      <div className="grid gap-8 lg:grid-cols-12 lg:items-start w-full">
+        <div className="lg:col-span-7 xl:col-span-7">
           <Badge
             variant="outline"
-            className="rounded-lg border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-800 font-medium dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300"
+            className="rounded-full border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300"
           >
-            <Sparkles className="mr-1.5 size-3.5" aria-hidden="true" />
+            <Sparkles className="mr-1 size-3.5" />
             Guided assessment
           </Badge>
-          <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+          <h1 className="mt-5 text-4xl font-bold tracking-[-0.045em] text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
             Let’s build your tax picture.
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
+          <p className="mt-5 text-lg leading-8 text-slate-600 dark:text-slate-300">
             We’ll ask about your profile, income, deductions and taxes already
             paid. Each section explains why the information matters.
           </p>
@@ -47,9 +47,8 @@ export default function AssessmentIntroPage() {
             </InfoNote>
           </div>
         </div>
-
-        <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
-          <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+        <div className="lg:col-span-5 xl:col-span-5 rounded-3xl border border-border bg-card p-6 sm:p-8 shadow-[0_4px_24px_-4px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900">
+          <p className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">
             Before you begin
           </p>
           <ul className="mt-5 space-y-5">
@@ -75,13 +74,13 @@ export default function AssessmentIntroPage() {
                 copy: "Advanced international, audit and partnership cases are not fully supported.",
               },
             ].map(({ icon: Icon, title, copy }) => (
-              <li key={title} className="flex gap-3.5 items-start">
-                <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-900">
-                  <Icon className="size-4" aria-hidden="true" />
+              <li key={title} className="flex gap-3.5">
+                <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                  <Icon className="size-5" />
                 </span>
                 <div>
-                  <p className="font-semibold text-slate-900 dark:text-white text-sm">{title}</p>
-                  <p className="mt-0.5 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100">{title}</p>
+                  <p className="mt-1 text-sm leading-6 text-slate-500 dark:text-slate-400">
                     {copy}
                   </p>
                 </div>
@@ -91,7 +90,7 @@ export default function AssessmentIntroPage() {
         </div>
       </div>
 
-      <section className="mt-10 grid gap-4 sm:grid-cols-3">
+      <section className="mt-10 grid gap-6 sm:grid-cols-3 w-full">
         {[
           [
             ListChecks,
@@ -113,19 +112,18 @@ export default function AssessmentIntroPage() {
           return (
             <article
               key={String(title)}
-              className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900"
+              className="rounded-2xl border border-border bg-card p-6 shadow-[0_2px_12px_-2px_rgba(15,23,42,0.04)] dark:border-slate-800 dark:bg-slate-900"
             >
-              <CardIcon className="size-5 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
-              <h2 className="mt-3 text-base font-bold text-slate-900 dark:text-white">{String(title)}</h2>
-              <p className="mt-1.5 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
+              <CardIcon className="size-5 text-emerald-700 dark:text-emerald-400" />
+              <h2 className="mt-4 font-bold text-slate-900 dark:text-slate-100">{String(title)}</h2>
+              <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">
                 {String(copy)}
               </p>
             </article>
           );
         })}
       </section>
-
-      <div className="mt-8">
+      <div className="mt-8 w-full">
         <WarningBanner title="Prototype scope">
           Calculations, document processing and ITR recommendations use sample
           frontend logic. Confirm important decisions with a qualified tax
