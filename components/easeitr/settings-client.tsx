@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import {
   Download,
   Laptop,
@@ -34,6 +34,12 @@ const themes = [
 export function SettingsClient() {
   const { theme, setTheme } = useTheme();
   const { clear, exportData } = useAssessment();
+  const mounted = useSyncExternalStore(
+    () => () => undefined,
+    () => true,
+    () => false,
+  );
+  const effectiveTheme = mounted ? theme : "system";
   const [currency, setCurrency] = useState("symbol");
   const [retainDocuments, setRetainDocuments] = useState(false);
   useEffect(() => {
@@ -74,7 +80,7 @@ export function SettingsClient() {
             Choose how EaseITR looks on this device.
           </p>
           <RadioGroup
-            value={theme}
+            value={effectiveTheme}
             onValueChange={setTheme}
             className="mt-5 grid gap-3 sm:grid-cols-3"
           >
@@ -84,7 +90,7 @@ export function SettingsClient() {
                 htmlFor={`theme-${value}`}
                 className={cn(
                   "flex cursor-pointer items-center gap-3 rounded-2xl border p-4",
-                  theme === value &&
+                  effectiveTheme === value &&
                     "border-emerald-600 bg-emerald-50 dark:bg-emerald-950",
                 )}
               >

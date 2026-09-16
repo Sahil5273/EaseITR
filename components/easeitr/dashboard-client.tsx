@@ -172,7 +172,12 @@ export function DashboardClient() {
           </div>
           <div className="mt-4 grid grid-cols-[minmax(0,1fr)_minmax(130px,0.8fr)] items-center gap-2">
             <div className="h-48">
-              <ResponsiveContainer width="100%" height="100%">
+              <ResponsiveContainer
+                width="100%"
+                height="100%"
+                minWidth={0}
+                minHeight={192}
+              >
                 <PieChart>
                   <Pie
                     data={chartData}
