@@ -154,11 +154,11 @@ export function WizardClient({ step }: { step: WizardStepSlug }) {
               <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
                 Step {index + 1} of {WIZARD_STEPS.length}
               </p>
-              <h1 className="mt-1 text-3xl font-bold tracking-[-0.035em]">
+              <h1 className="mt-1 text-3xl font-bold tracking-[-0.035em] text-slate-900 dark:text-white">
                 {currentStepObj.label}
               </h1>
             </div>
-            <div className="flex items-center gap-2 text-xs text-slate-500">
+            <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
               <Check className="size-3.5 text-emerald-600" aria-hidden="true" />
               {savedAt
                 ? `Saved ${new Date(savedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`
@@ -169,16 +169,16 @@ export function WizardClient({ step }: { step: WizardStepSlug }) {
           <ActiveWizardSection step={step} data={data} update={update} />
 
           {/* Sticky Bottom Action Controls */}
-          <div className="sticky bottom-4 z-20 mt-8 flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white/95 p-3 shadow-lg backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
+          <div className="sticky bottom-4 z-20 mt-8 flex flex-wrap items-center gap-2 rounded-lg border border-slate-200 bg-white/95 p-3 shadow-md backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
             {previous ? (
-              <Button variant="outline" asChild className="rounded-xl">
+              <Button variant="outline" asChild className="rounded-lg">
                 <Link href={`/assessment/${previous.slug}`}>
                   <ArrowLeft className="mr-1.5 size-4" aria-hidden="true" />
                   Previous
                 </Link>
               </Button>
             ) : (
-              <Button variant="outline" asChild className="rounded-xl">
+              <Button variant="outline" asChild className="rounded-lg">
                 <Link href="/assessment">
                   <ArrowLeft className="mr-1.5 size-4" aria-hidden="true" />
                   Intro
@@ -188,14 +188,14 @@ export function WizardClient({ step }: { step: WizardStepSlug }) {
 
             <Button
               variant="ghost"
-              className="rounded-xl"
+              className="rounded-lg"
               onClick={() => toast.success("Assessment saved on this device.")}
             >
               <Save className="mr-1.5 size-4" aria-hidden="true" />
               Save
             </Button>
 
-            <Button variant="ghost" className="rounded-xl" onClick={toggleFlag}>
+            <Button variant="ghost" className="rounded-lg" onClick={toggleFlag}>
               <Flag className="mr-1.5 size-4" aria-hidden="true" />
               {flagged ? "Remove flag" : "Review later"}
             </Button>
@@ -203,7 +203,7 @@ export function WizardClient({ step }: { step: WizardStepSlug }) {
             {currentStepObj.optional && (
               <Button
                 variant="outline"
-                className="rounded-xl border-amber-300 text-amber-900 hover:bg-amber-50 dark:border-amber-800 dark:text-amber-300 dark:hover:bg-amber-950"
+                className="rounded-lg border-amber-300 text-amber-900 hover:bg-amber-50 dark:border-amber-800 dark:text-amber-300 dark:hover:bg-amber-950"
                 onClick={handleSkipRequest}
               >
                 <Forward className="mr-1.5 size-4" aria-hidden="true" />
@@ -211,13 +211,13 @@ export function WizardClient({ step }: { step: WizardStepSlug }) {
               </Button>
             )}
 
-            <Button variant="ghost" asChild className="mr-auto rounded-xl">
+            <Button variant="ghost" asChild className="mr-auto rounded-lg">
               <Link href="/dashboard">Exit & resume later</Link>
             </Button>
 
             <Button
               onClick={moveForward}
-              className="rounded-xl bg-emerald-700 text-white hover:bg-emerald-800"
+              className="rounded-lg bg-emerald-700 text-white hover:bg-emerald-800"
               disabled={step === "review" && !data.confirmed}
             >
               {step === "review" ? "Generate mock results" : "Save & continue"}
@@ -229,9 +229,9 @@ export function WizardClient({ step }: { step: WizardStepSlug }) {
 
       {/* Skip Confirmation Dialog */}
       <Dialog open={skipModalOpen} onOpenChange={setSkipModalOpen}>
-        <DialogContent className="rounded-2xl sm:max-w-md bg-white dark:bg-slate-900">
+        <DialogContent className="rounded-lg sm:max-w-md bg-white dark:bg-slate-900 dark:border-slate-800">
           <DialogHeader>
-            <DialogTitle>Skip this section?</DialogTitle>
+            <DialogTitle className="text-slate-900 dark:text-white">Skip this section?</DialogTitle>
             <DialogDescription className="mt-2 text-slate-600 dark:text-slate-300">
               You previously entered information for this section. Skipping it will keep your entered details, but mark the section as skipped and exclude it from current calculations until completed.
             </DialogDescription>
@@ -239,14 +239,14 @@ export function WizardClient({ step }: { step: WizardStepSlug }) {
           <DialogFooter className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-end">
             <Button
               variant="outline"
-              className="rounded-xl"
+              className="rounded-lg"
               onClick={() => setSkipModalOpen(false)}
             >
               Continue editing
             </Button>
             <Button
               variant="default"
-              className="rounded-xl bg-amber-600 text-white hover:bg-amber-700"
+              className="rounded-lg bg-amber-600 text-white hover:bg-amber-700"
               onClick={executeSkip}
             >
               Confirm & skip section

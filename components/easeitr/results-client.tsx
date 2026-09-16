@@ -40,7 +40,7 @@ export function RuleExplanationList({ rules }: { rules: RuleExplanation[] }) {
       {rules.map((rule) => (
         <div
           key={rule.id}
-          className="flex gap-3 rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
+          className="flex gap-3 rounded-lg border border-slate-200 p-4 dark:border-slate-800"
         >
           {rule.outcome === "supports" ? (
             <Check className="mt-0.5 size-5 shrink-0 text-emerald-600" aria-hidden="true" />
@@ -50,8 +50,8 @@ export function RuleExplanationList({ rules }: { rules: RuleExplanation[] }) {
             <X className="mt-0.5 size-5 shrink-0 text-slate-400" aria-hidden="true" />
           )}
           <div>
-            <p className="font-semibold">{rule.title}</p>
-            <p className="mt-1 text-sm leading-6 text-slate-500">
+            <p className="font-semibold text-slate-900 dark:text-white">{rule.title}</p>
+            <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
               {rule.explanation}
             </p>
           </div>
@@ -67,7 +67,7 @@ export function ITRRecommendationCard({
   recommendation: ITRRecommendation;
 }) {
   return (
-    <article className="overflow-hidden rounded-3xl border border-emerald-200 bg-white shadow-sm dark:border-emerald-900 dark:bg-slate-900">
+    <article className="overflow-hidden rounded-lg border border-emerald-200 bg-white shadow-sm dark:border-emerald-900 dark:bg-slate-900">
       <div className="bg-emerald-700 px-6 py-5 text-white">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -78,7 +78,7 @@ export function ITRRecommendationCard({
               {recommendation.form}
             </p>
           </div>
-          <Badge className="rounded-xl bg-white/15 text-white hover:bg-white/15">
+          <Badge className="rounded-md bg-white/15 text-white hover:bg-white/15">
             {recommendation.confidence === "professional-review"
               ? "Review required"
               : `${recommendation.confidence} confidence`}
@@ -86,10 +86,10 @@ export function ITRRecommendationCard({
         </div>
       </div>
       <div className="p-6">
-        <p className="text-lg font-semibold leading-8">
+        <p className="text-lg font-semibold leading-8 text-slate-900 dark:text-white">
           {recommendation.summary}
         </p>
-        <p className="mt-3 text-sm leading-6 text-slate-500">
+        <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
           This is a rule-based sample recommendation, not a guarantee of legal
           eligibility.
         </p>
@@ -141,23 +141,23 @@ export function ResultsClient() {
       <div className="print:max-w-none">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
-            <Badge variant="outline" className="rounded-xl">
+            <Badge variant="outline" className="rounded-md border-slate-300 dark:border-slate-700">
               Sample assessment result
             </Badge>
-            <h1 className="mt-3 text-3xl font-bold tracking-[-0.04em] sm:text-4xl">
+            <h1 className="mt-3 text-3xl font-bold tracking-[-0.04em] text-slate-900 dark:text-white sm:text-4xl">
               Your estimated tax summary
             </h1>
-            <p className="mt-2 text-slate-500">
+            <p className="mt-2 text-slate-600 dark:text-slate-400">
               Assessment year {assessment.profile.assessmentYear} · Generated
               from local prototype data
             </p>
           </div>
           <div className="flex flex-wrap gap-2 print:hidden">
-            <Button variant="outline" className="rounded-xl" onClick={() => window.print()}>
+            <Button variant="outline" className="rounded-lg" onClick={() => window.print()}>
               <Download className="mr-1.5 size-4" aria-hidden="true" />
               Download / print summary
             </Button>
-            <Button variant="outline" className="rounded-xl" asChild>
+            <Button variant="outline" className="rounded-lg" asChild>
               <Link href="/assessment/review">Edit information</Link>
             </Button>
           </div>
@@ -176,18 +176,18 @@ export function ResultsClient() {
           {recommendation ? (
             <ITRRecommendationCard recommendation={recommendation} />
           ) : (
-            <Skeleton className="h-72 rounded-3xl" />
+            <Skeleton className="h-72 rounded-lg" />
           )}
-          <article className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="text-xl font-bold">Why this result appeared</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-500">
+          <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Why this result appeared</h2>
+            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
               The frontend demonstration checked the following rule groups.
             </p>
             <div className="mt-5">
               {recommendation ? (
                 <RuleExplanationList rules={recommendation.rules} />
               ) : (
-                <Skeleton className="h-52 rounded-2xl" />
+                <Skeleton className="h-52 rounded-lg" />
               )}
             </div>
           </article>
@@ -228,7 +228,7 @@ export function ResultsClient() {
             </>
           ) : (
             Array.from({ length: 4 }, (_, index) => (
-              <Skeleton key={index} className="h-32 rounded-2xl" />
+              <Skeleton key={index} className="h-32 rounded-lg" />
             ))
           )}
         </section>
@@ -236,11 +236,11 @@ export function ResultsClient() {
           {comparison ? (
             <TaxComparisonCard comparison={comparison} />
           ) : (
-            <Skeleton className="h-80 rounded-3xl" />
+            <Skeleton className="h-80 rounded-lg" />
           )}
-          <article className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="text-xl font-bold">Alternative forms</h2>
-            <p className="mt-2 text-sm text-slate-500">
+          <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Alternative forms</h2>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
               Why other common individual forms were not selected by the sample
               rules.
             </p>
@@ -248,13 +248,13 @@ export function ResultsClient() {
               {recommendation?.alternatives.map((alternative) => (
                 <div
                   key={alternative.form}
-                  className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800"
+                  className="rounded-lg bg-slate-50 border border-slate-100 p-4 dark:border-slate-800 dark:bg-slate-800"
                 >
                   <div className="flex items-center justify-between">
-                    <p className="font-bold">{alternative.form}</p>
-                    <Badge variant="outline">Not selected</Badge>
+                    <p className="font-bold text-slate-900 dark:text-white">{alternative.form}</p>
+                    <Badge variant="outline" className="rounded-md">Not selected</Badge>
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-slate-500">
+                  <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
                     {alternative.reason}
                   </p>
                 </div>
@@ -263,8 +263,8 @@ export function ResultsClient() {
           </article>
         </section>
         <section className="mt-5 grid gap-5 lg:grid-cols-2">
-          <article className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="text-xl font-bold">Income summary</h2>
+          <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Income summary</h2>
             <dl className="mt-5 space-y-3 text-sm">
               {[
                 [
@@ -294,14 +294,14 @@ export function ResultsClient() {
                   key={String(label)}
                   className="flex justify-between border-b border-slate-100 pb-3 last:border-0 dark:border-slate-800"
                 >
-                  <dt className="text-slate-500">{String(label)}</dt>
-                  <dd className="font-semibold">{formatINR(Number(value))}</dd>
+                  <dt className="text-slate-600 dark:text-slate-400">{String(label)}</dt>
+                  <dd className="font-semibold text-slate-900 dark:text-white">{formatINR(Number(value))}</dd>
                 </div>
               ))}
             </dl>
           </article>
-          <article className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="text-xl font-bold">Information checks</h2>
+          <article className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">Information checks</h2>
             <div className="mt-5 space-y-3">
               {missingSalary && (
                 <WarningBanner title="Missing salary amount">
@@ -314,7 +314,7 @@ export function ResultsClient() {
                 </UnsupportedCaseBanner>
               )}
               {!missingSalary && !unsupported && (
-                <div className="flex items-center gap-3 rounded-2xl bg-emerald-50 p-4 text-sm text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200">
+                <div className="flex items-center gap-3 rounded-lg bg-emerald-50 border border-emerald-100 p-4 text-sm text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200 dark:border-emerald-900">
                   <Check className="size-5" />
                   No blocking sample-data warnings found.
                 </div>
@@ -325,7 +325,7 @@ export function ResultsClient() {
         <div className="mt-6 flex flex-wrap gap-3 print:hidden">
           <Button
             asChild
-            className="bg-emerald-700 text-white hover:bg-emerald-800"
+            className="rounded-lg bg-emerald-700 text-white hover:bg-emerald-800"
           >
             <Link href="/assessment/review">
               Edit information <ArrowRight />
@@ -333,6 +333,7 @@ export function ResultsClient() {
           </Button>
           <Button
             variant="outline"
+            className="rounded-lg"
             onClick={() => {
               clear();
               router.push("/assessment");
@@ -342,8 +343,8 @@ export function ResultsClient() {
             Start over
           </Button>
         </div>
-        <div className="mt-8 flex gap-3 rounded-2xl bg-slate-900 p-5 text-sm leading-6 text-slate-200 print:border print:bg-white print:text-black">
-          <ShieldAlert className="mt-0.5 size-5 shrink-0 text-amber-400" />
+        <div className="mt-8 flex gap-3 rounded-lg border border-amber-200 bg-amber-50/80 p-5 text-sm leading-6 text-amber-950 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
+          <ShieldAlert className="mt-0.5 size-5 shrink-0 text-amber-700 dark:text-amber-400" />
           <p>
             EaseITR is an independent frontend prototype. This summary is not an
             official tax computation, return, legal opinion or professional

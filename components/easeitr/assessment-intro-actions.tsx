@@ -12,7 +12,7 @@ export function AssessmentIntroActions() {
     <div className="flex flex-col gap-3 sm:flex-row">
       <Button
         size="lg"
-        className="h-12 rounded-xl bg-emerald-700 text-white hover:bg-emerald-800"
+        className="h-11 rounded-lg bg-emerald-700 text-white font-medium hover:bg-emerald-800"
         onClick={() => {
           update((data) => ({
             ...data,
@@ -22,18 +22,18 @@ export function AssessmentIntroActions() {
           router.push("/assessment/profile");
         }}
       >
-        Begin assessment <ArrowRight />
+        Begin assessment <ArrowRight className="ml-1.5 size-4" aria-hidden="true" />
       </Button>
       <Button
         size="lg"
         variant="outline"
-        className="h-12 rounded-xl"
+        className="h-11 rounded-lg border-slate-200 font-medium"
         onClick={() => {
           loadSample("trader");
           router.push("/dashboard");
         }}
       >
-        <Sparkles />
+        <Sparkles className="mr-1.5 size-4 text-emerald-600" aria-hidden="true" />
         Try with sample data
       </Button>
     </div>

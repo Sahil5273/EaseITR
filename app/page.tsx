@@ -71,7 +71,7 @@ export default function HomePage() {
           <div className="max-w-2xl">
             <Badge
               variant="outline"
-              className="mb-6 rounded-xl border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300 font-medium"
+              className="mb-6 rounded-md border-emerald-200 bg-emerald-50 px-3 py-1.5 text-emerald-800 font-medium dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300"
             >
               <Sparkles className="mr-1.5 size-3.5" aria-hidden="true" /> Independent
               tax-assistance prototype
@@ -86,7 +86,7 @@ export default function HomePage() {
               <Button
                 size="lg"
                 asChild
-                className="h-12 rounded-xl bg-emerald-700 px-6 text-base text-white hover:bg-emerald-800"
+                className="h-12 rounded-lg bg-emerald-700 px-6 text-base text-white hover:bg-emerald-800"
               >
                 <Link href="/assessment">
                   Start tax assessment <ArrowRight className="ml-2 size-4" aria-hidden="true" />
@@ -96,7 +96,7 @@ export default function HomePage() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="h-12 rounded-xl px-6 text-base"
+                className="h-12 rounded-lg px-6 text-base"
               >
                 <Link href="/dashboard">Explore sample dashboard</Link>
               </Button>
@@ -118,7 +118,7 @@ export default function HomePage() {
             className="relative mx-auto w-full max-w-xl"
             aria-label="Sample assessment summary preview"
           >
-            <div className="overflow-hidden rounded-[1.75rem] border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900">
+            <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-lg dark:border-slate-800 dark:bg-slate-900">
               <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 dark:border-slate-800 sm:px-6">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
@@ -128,7 +128,7 @@ export default function HomePage() {
                     Assessment year 2026–27
                   </p>
                 </div>
-                <Badge className="rounded-xl bg-emerald-100 text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-950 dark:text-emerald-300">
+                <Badge className="rounded-md bg-emerald-100 text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-950 dark:text-emerald-300">
                   70% complete
                 </Badge>
               </div>
@@ -138,22 +138,22 @@ export default function HomePage() {
                     <span className="text-slate-600 dark:text-slate-300">
                       Your progress
                     </span>
-                    <span className="font-semibold">7 of 10 steps</span>
+                    <span className="font-semibold text-slate-900 dark:text-white">7 of 10 steps</span>
                   </div>
-                  <div className="h-2 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
-                    <div className="h-full w-[70%] rounded-xl bg-emerald-600" />
+                  <div className="h-2 overflow-hidden rounded-md bg-slate-100 dark:bg-slate-800">
+                    <div className="h-full w-[70%] rounded-md bg-emerald-600" />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/70">
+                  <div className="rounded-lg bg-slate-50 p-4 dark:bg-slate-800/70">
                     <p className="text-xs text-slate-500 dark:text-slate-400">
                       Estimated income
                     </p>
-                    <p className="mt-1 text-xl font-bold tracking-tight">
+                    <p className="mt-1 text-xl font-bold tracking-tight text-slate-900 dark:text-white">
                       ₹12,84,000
                     </p>
                   </div>
-                  <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800/70">
+                  <div className="rounded-lg bg-slate-50 p-4 dark:bg-slate-800/70">
                     <p className="text-xs text-slate-500 dark:text-slate-400">
                       Potential form
                     </p>
@@ -162,20 +162,20 @@ export default function HomePage() {
                     </p>
                   </div>
                 </div>
-                <div className="rounded-2xl border border-slate-200 p-4 dark:border-slate-800">
+                <div className="rounded-lg border border-slate-200 p-4 dark:border-slate-800">
                   <div className="flex items-start gap-3">
-                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
                       <FileText className="size-4" aria-hidden="true" />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="font-semibold">Why ITR-2 may apply</p>
+                      <p className="font-semibold text-slate-900 dark:text-white">Why ITR-2 may apply</p>
                       <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
                         You reported salary income and capital gains, with no business income.
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-start gap-2 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
+                <div className="flex items-start gap-2 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900 dark:bg-amber-950/40 dark:text-amber-200">
                   <HelpCircle className="mt-0.5 size-4 shrink-0" aria-hidden="true" /> Estimates are for guidance only and are not a filed tax return.
                 </div>
               </div>
@@ -190,7 +190,7 @@ export default function HomePage() {
       >
         <div className="max-w-2xl">
           <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400">A clearer process</p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl text-slate-900 dark:text-white">
             From scattered details to a useful next step
           </h2>
           <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
@@ -217,12 +217,12 @@ export default function HomePage() {
           ].map(([number, title, copy]) => (
             <article
               key={number}
-              className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+              className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
             >
               <span className="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400">
                 {number}
               </span>
-              <h3 className="mt-8 text-xl font-bold tracking-tight">{title}</h3>
+              <h3 className="mt-8 text-xl font-bold tracking-tight text-slate-900 dark:text-white">{title}</h3>
               <p className="mt-3 leading-7 text-slate-600 dark:text-slate-400">
                 {copy}
               </p>
@@ -236,7 +236,7 @@ export default function HomePage() {
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400">Built around real life</p>
-              <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
+              <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl text-slate-900 dark:text-white">
                 Bring different kinds of income into one view
               </h2>
               <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
@@ -247,7 +247,7 @@ export default function HomePage() {
               {incomeTypes.map(({ icon: Icon, label }) => (
                 <div
                   key={label}
-                  className="flex min-h-28 flex-col justify-between rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
+                  className="flex min-h-28 flex-col justify-between rounded-lg border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
                 >
                   <Icon className="size-5 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
                   <span className="mt-5 text-sm font-semibold text-slate-800 dark:text-slate-200">
@@ -279,10 +279,10 @@ export default function HomePage() {
           },
         ].map(({ icon: Icon, title, copy }) => (
           <article key={title} className="p-2">
-            <span className="grid size-11 place-items-center rounded-2xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+            <span className="grid size-11 place-items-center rounded-lg bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
               <Icon className="size-5" aria-hidden="true" />
             </span>
-            <h3 className="mt-5 text-lg font-bold">{title}</h3>
+            <h3 className="mt-5 text-lg font-bold text-slate-900 dark:text-white">{title}</h3>
             <p className="mt-2 leading-7 text-slate-600 dark:text-slate-400">
               {copy}
             </p>
@@ -291,12 +291,12 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-        <div className="grid gap-8 overflow-hidden rounded-[2rem] bg-slate-900 px-6 py-10 text-white sm:px-10 lg:grid-cols-[1fr_0.8fr] lg:items-center lg:px-14 lg:py-14">
+        <div className="grid gap-8 overflow-hidden rounded-lg bg-slate-900 dark:bg-slate-900 border border-slate-800 px-6 py-10 text-white sm:px-10 lg:grid-cols-[1fr_0.8fr] lg:items-center lg:px-14 lg:py-14">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-400">
               Your data, your choice
             </p>
-            <h2 className="mt-3 text-3xl font-bold tracking-[-0.035em] sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-bold tracking-[-0.035em] sm:text-4xl text-white">
               Explore without handing over your identity.
             </h2>
             <p className="mt-4 max-w-2xl leading-7 text-slate-300">
@@ -311,7 +311,7 @@ export default function HomePage() {
             ].map((item) => (
               <div
                 key={item}
-                className="flex items-center gap-3 rounded-xl bg-white/10 px-4 py-3 text-sm font-medium"
+                className="flex items-center gap-3 rounded-lg bg-white/10 px-4 py-3 text-sm font-medium"
               >
                 <Check className="size-4 text-emerald-400" aria-hidden="true" />
                 {item}
@@ -324,7 +324,7 @@ export default function HomePage() {
       <section className="mx-auto grid max-w-7xl gap-10 px-4 pb-20 sm:px-6 lg:grid-cols-[0.65fr_1fr] lg:px-8">
         <div>
           <p className="text-sm font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400">Common questions</p>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">A little clarity before you begin</h2>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl text-slate-900 dark:text-white">A little clarity before you begin</h2>
         </div>
         <Accordion
           type="single"
@@ -333,7 +333,7 @@ export default function HomePage() {
         >
           {faqs.map((item, index) => (
             <AccordionItem key={item.question} value={`faq-${index}`}>
-              <AccordionTrigger className="py-5 text-base hover:no-underline">
+              <AccordionTrigger className="py-5 text-base hover:no-underline text-slate-900 dark:text-white">
                 {item.question}
               </AccordionTrigger>
               <AccordionContent className="max-w-2xl pb-5 leading-7 text-slate-600 dark:text-slate-400">
@@ -347,7 +347,7 @@ export default function HomePage() {
       <section className="border-t border-slate-200 bg-emerald-50/70 dark:border-slate-800 dark:bg-emerald-950/20">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-6 px-4 py-12 sm:px-6 md:flex-row md:items-center lg:px-8">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight">
+            <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               Ready to organise your tax information?
             </h2>
             <p className="mt-2 text-slate-600 dark:text-slate-400">
@@ -357,7 +357,7 @@ export default function HomePage() {
           <Button
             size="lg"
             asChild
-            className="h-12 rounded-xl bg-emerald-700 px-6 text-white hover:bg-emerald-800"
+            className="h-12 rounded-lg bg-emerald-700 px-6 text-white hover:bg-emerald-800"
           >
             <Link href="/assessment">
               Start tax assessment <ArrowRight className="ml-2 size-4" aria-hidden="true" />

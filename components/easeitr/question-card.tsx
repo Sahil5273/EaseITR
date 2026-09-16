@@ -30,13 +30,13 @@ export function QuestionCard({
   children: React.ReactNode;
 }) {
   return (
-    <Card className="rounded-3xl border-slate-200 shadow-[0_14px_40px_rgba(15,23,42,0.045)] dark:border-slate-800">
-      <CardHeader className="gap-2 border-b border-slate-100 px-5 py-5 dark:border-slate-800 sm:px-7">
+    <Card className="rounded-lg border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900">
+      <CardHeader className="gap-2 border-b border-slate-100 px-5 py-5 sm:px-7 dark:border-slate-800">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <CardTitle className="text-xl tracking-tight">{title}</CardTitle>
+            <CardTitle className="text-xl tracking-tight text-slate-900 dark:text-white">{title}</CardTitle>
             {description && (
-              <CardDescription className="mt-2 max-w-2xl leading-6">
+              <CardDescription className="mt-2 max-w-2xl leading-6 text-slate-600 dark:text-slate-400">
                 {description}
               </CardDescription>
             )}
@@ -49,7 +49,7 @@ export function QuestionCard({
               onClick={onFlag}
               aria-pressed={flagged}
               className={cn(
-                "shrink-0 rounded-xl",
+                "shrink-0 rounded-lg",
                 flagged &&
                   "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200",
               )}

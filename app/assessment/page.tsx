@@ -21,19 +21,19 @@ export const metadata: Metadata = {
 export default function AssessmentIntroPage() {
   return (
     <AppShell width="reading">
-      <div className="grid gap-8 lg:grid-cols-[1fr_0.72fr] lg:items-start">
+      <div className="grid gap-8 lg:grid-cols-[1fr_0.75fr] lg:items-start">
         <div>
           <Badge
             variant="outline"
-            className="rounded-full border-emerald-200 bg-emerald-50 text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-300"
+            className="rounded-lg border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-800 font-medium dark:border-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300"
           >
-            <Sparkles className="mr-1 size-3.5" />
+            <Sparkles className="mr-1.5 size-3.5" aria-hidden="true" />
             Guided assessment
           </Badge>
-          <h1 className="mt-5 text-4xl font-bold tracking-[-0.045em] text-slate-950 dark:text-white sm:text-5xl">
+          <h1 className="mt-4 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
             Let’s build your tax picture.
           </h1>
-          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-600 dark:text-slate-300">
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 dark:text-slate-300">
             We’ll ask about your profile, income, deductions and taxes already
             paid. Each section explains why the information matters.
           </p>
@@ -47,8 +47,9 @@ export default function AssessmentIntroPage() {
             </InfoNote>
           </div>
         </div>
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.05)] dark:border-slate-800 dark:bg-slate-900">
-          <p className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">
+
+        <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
             Before you begin
           </p>
           <ul className="mt-5 space-y-5">
@@ -74,13 +75,13 @@ export default function AssessmentIntroPage() {
                 copy: "Advanced international, audit and partnership cases are not fully supported.",
               },
             ].map(({ icon: Icon, title, copy }) => (
-              <li key={title} className="flex gap-3">
-                <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-                  <Icon className="size-5" />
+              <li key={title} className="flex gap-3.5 items-start">
+                <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-100 dark:bg-emerald-950 dark:text-emerald-300 dark:border-emerald-900">
+                  <Icon className="size-4" aria-hidden="true" />
                 </span>
                 <div>
-                  <p className="font-semibold">{title}</p>
-                  <p className="mt-1 text-sm leading-6 text-slate-500">
+                  <p className="font-semibold text-slate-900 dark:text-white text-sm">{title}</p>
+                  <p className="mt-0.5 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
                     {copy}
                   </p>
                 </div>
@@ -112,17 +113,18 @@ export default function AssessmentIntroPage() {
           return (
             <article
               key={String(title)}
-              className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900"
+              className="rounded-lg border border-slate-200 bg-white p-5 shadow-xs dark:border-slate-800 dark:bg-slate-900"
             >
-              <CardIcon className="size-5 text-emerald-700" />
-              <h2 className="mt-4 font-bold">{String(title)}</h2>
-              <p className="mt-2 text-sm leading-6 text-slate-500">
+              <CardIcon className="size-5 text-emerald-700 dark:text-emerald-400" aria-hidden="true" />
+              <h2 className="mt-3 text-base font-bold text-slate-900 dark:text-white">{String(title)}</h2>
+              <p className="mt-1.5 text-xs leading-relaxed text-slate-600 dark:text-slate-400">
                 {String(copy)}
               </p>
             </article>
           );
         })}
       </section>
+
       <div className="mt-8">
         <WarningBanner title="Prototype scope">
           Calculations, document processing and ITR recommendations use sample
