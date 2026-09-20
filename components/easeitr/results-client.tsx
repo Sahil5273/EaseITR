@@ -18,7 +18,9 @@ import { TaxComparisonCard } from "./tax-comparison-card";
 import { UnsupportedCaseBanner, WarningBanner } from "./feedback";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatINR } from "@/lib/domain/constants";
 import type {
   ITRRecommendation,
@@ -172,8 +174,6 @@ export function ResultsClient() {
             </WarningBanner>
           </div>
         )}
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
         <section className="mt-6">
           <Tabs defaultValue="overview" className="w-full">
