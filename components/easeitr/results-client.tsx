@@ -172,155 +172,183 @@ export function ResultsClient() {
             </WarningBanner>
           </div>
         )}
-        <section className="mt-7 grid gap-5 xl:grid-cols-[0.85fr_1.15fr]">
-          {recommendation ? (
-            <ITRRecommendationCard recommendation={recommendation} />
-          ) : (
-            <Skeleton className="h-72 rounded-3xl" />
-          )}
-          <article className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="text-xl font-bold">Why this result appeared</h2>
-            <p className="mt-2 text-sm leading-6 text-slate-500">
-              The frontend demonstration checked the following rule groups.
-            </p>
-            <div className="mt-5">
-              {recommendation ? (
-                <RuleExplanationList rules={recommendation.rules} />
-              ) : (
-                <Skeleton className="h-52 rounded-2xl" />
-              )}
-            </div>
-          </article>
-        </section>
-        {recommendation?.requiresProfessionalReview && (
-          <div className="mt-5">
-            <UnsupportedCaseBanner>
-              One or more answers indicate a complex or audit-sensitive
-              situation. A qualified professional should review the final filing
-              position.
-            </UnsupportedCaseBanner>
-          </div>
-        )}
-        <section className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {comparison ? (
-            <>
-              <SummaryCard
-                label="Estimated total income"
-                value={formatINR(comparison.newRegime.totalIncome)}
-              />
-              <SummaryCard
-                label="Estimated deductions"
-                value={formatINR(comparison.newRegime.totalDeductions)}
-              />
-              <SummaryCard
-                label="Estimated taxable income"
-                value={formatINR(comparison.newRegime.taxableIncome)}
-              />
-              <SummaryCard
-                label={
-                  comparison.newRegime.isRefund
-                    ? "Estimated refund"
-                    : "Estimated amount payable"
-                }
-                value={formatINR(comparison.newRegime.balance)}
-                tone={comparison.newRegime.isRefund ? "positive" : "warning"}
-              />
-            </>
-          ) : (
-            Array.from({ length: 4 }, (_, index) => (
-              <Skeleton key={index} className="h-32 rounded-2xl" />
-            ))
-          )}
-        </section>
-        <section className="mt-5 grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
-          {comparison ? (
-            <TaxComparisonCard comparison={comparison} />
-          ) : (
-            <Skeleton className="h-80 rounded-3xl" />
-          )}
-          <article className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="text-xl font-bold">Alternative forms</h2>
-            <p className="mt-2 text-sm text-slate-500">
-              Why other common individual forms were not selected by the sample
-              rules.
-            </p>
-            <div className="mt-5 space-y-3">
-              {recommendation?.alternatives.map((alternative) => (
-                <div
-                  key={alternative.form}
-                  className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800"
-                >
-                  <div className="flex items-center justify-between">
-                    <p className="font-bold">{alternative.form}</p>
-                    <Badge variant="outline">Not selected</Badge>
-                  </div>
-                  <p className="mt-2 text-sm leading-6 text-slate-500">
-                    {alternative.reason}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </article>
-        </section>
-        <section className="mt-5 grid gap-5 lg:grid-cols-2">
-          <article className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="text-xl font-bold">Income summary</h2>
-            <dl className="mt-5 space-y-3 text-sm">
-              {[
-                [
-                  "Salary & pension",
-                  assessment.salary.grossSalary +
-                    assessment.salary.pensionIncome,
-                ],
-                [
-                  "Capital gains",
-                  assessment.capitalGains.shortTermGains +
-                    assessment.capitalGains.longTermGains,
-                ],
-                [
-                  "Trading / business",
-                  assessment.trading.profitOrLoss +
-                    assessment.business.netProfit,
-                ],
-                [
-                  "Other income",
-                  Object.values(assessment.otherIncome).reduce(
-                    (sum, value) => sum + value,
-                    0,
-                  ),
-                ],
-              ].map(([label, value]) => (
-                <div
-                  key={String(label)}
-                  className="flex justify-between border-b border-slate-100 pb-3 last:border-0 dark:border-slate-800"
-                >
-                  <dt className="text-slate-500">{String(label)}</dt>
-                  <dd className="font-semibold">{formatINR(Number(value))}</dd>
-                </div>
-              ))}
-            </dl>
-          </article>
-          <article className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900">
-            <h2 className="text-xl font-bold">Information checks</h2>
-            <div className="mt-5 space-y-3">
-              {missingSalary && (
-                <WarningBanner title="Missing salary amount">
-                  Salary was selected but no gross salary was entered.
-                </WarningBanner>
-              )}
-              {unsupported && (
-                <UnsupportedCaseBanner>
-                  Foreign or complex residency answers are not fully supported.
-                </UnsupportedCaseBanner>
-              )}
-              {!missingSalary && !unsupported && (
-                <div className="flex items-center gap-3 rounded-2xl bg-emerald-50 p-4 text-sm text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200">
-                  <Check className="size-5" />
-                  No blocking sample-data warnings found.
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+
+        <section className="mt-6">
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 rounded-2xl bg-slate-100 p-1 dark:bg-slate-800 sm:w-[400px]">
+              <TabsTrigger value="overview" className="rounded-xl font-medium">
+                Regime & Form
+              </TabsTrigger>
+              <TabsTrigger value="breakdown" className="rounded-xl font-medium">
+                Income Breakdown
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="overview" className="mt-6 space-y-6">
+              <section className="grid gap-5 xl:grid-cols-[0.85fr_1.15fr]">
+                {recommendation ? (
+                  <ITRRecommendationCard recommendation={recommendation} />
+                ) : (
+                  <Skeleton className="h-72 rounded-3xl" />
+                )}
+                <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-xl font-bold">Why this result appeared</CardTitle>
+                    <CardDescription>
+                      The frontend demonstration checked the following rule groups.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {recommendation ? (
+                      <RuleExplanationList rules={recommendation.rules} />
+                    ) : (
+                      <Skeleton className="h-52 rounded-2xl" />
+                    )}
+                  </CardContent>
+                </Card>
+              </section>
+              {recommendation?.requiresProfessionalReview && (
+                <div>
+                  <UnsupportedCaseBanner>
+                    One or more answers indicate a complex or audit-sensitive
+                    situation. A qualified professional should review the final filing
+                    position.
+                  </UnsupportedCaseBanner>
                 </div>
               )}
-            </div>
-          </article>
+              <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                {comparison ? (
+                  <>
+                    <SummaryCard
+                      label="Estimated total income"
+                      value={formatINR(comparison.newRegime.totalIncome)}
+                    />
+                    <SummaryCard
+                      label="Estimated deductions"
+                      value={formatINR(comparison.newRegime.totalDeductions)}
+                    />
+                    <SummaryCard
+                      label="Estimated taxable income"
+                      value={formatINR(comparison.newRegime.taxableIncome)}
+                    />
+                    <SummaryCard
+                      label={
+                        comparison.newRegime.isRefund
+                          ? "Estimated refund"
+                          : "Estimated amount payable"
+                      }
+                      value={formatINR(comparison.newRegime.balance)}
+                      tone={comparison.newRegime.isRefund ? "positive" : "warning"}
+                    />
+                  </>
+                ) : (
+                  Array.from({ length: 4 }, (_, index) => (
+                    <Skeleton key={index} className="h-32 rounded-2xl" />
+                  ))
+                )}
+              </section>
+              <section className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
+                {comparison ? (
+                  <TaxComparisonCard comparison={comparison} />
+                ) : (
+                  <Skeleton className="h-80 rounded-3xl" />
+                )}
+                <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-xl font-bold">Alternative forms</CardTitle>
+                    <CardDescription>
+                      Why other common individual forms were not selected by the sample rules.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {recommendation?.alternatives.map((alternative) => (
+                      <div
+                        key={alternative.form}
+                        className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800"
+                      >
+                        <div className="flex items-center justify-between">
+                          <p className="font-bold">{alternative.form}</p>
+                          <Badge variant="outline">Not selected</Badge>
+                        </div>
+                        <p className="mt-2 text-sm leading-6 text-slate-500">
+                          {alternative.reason}
+                        </p>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </section>
+            </TabsContent>
+            <TabsContent value="breakdown" className="mt-6">
+              <section className="grid gap-5 lg:grid-cols-2">
+                <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-xl font-bold">Income summary</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <dl className="space-y-3 text-sm">
+                      {[
+                        [
+                          "Salary & pension",
+                          assessment.salary.grossSalary +
+                            assessment.salary.pensionIncome,
+                        ],
+                        [
+                          "Capital gains",
+                          assessment.capitalGains.shortTermGains +
+                            assessment.capitalGains.longTermGains,
+                        ],
+                        [
+                          "Trading / business",
+                          assessment.trading.profitOrLoss +
+                            assessment.business.netProfit,
+                        ],
+                        [
+                          "Other income",
+                          Object.values(assessment.otherIncome).reduce(
+                            (sum, value) => sum + value,
+                            0,
+                          ),
+                        ],
+                      ].map(([label, value]) => (
+                        <div
+                          key={String(label)}
+                          className="flex justify-between border-b border-slate-100 pb-3 last:border-0 dark:border-slate-800"
+                        >
+                          <dt className="text-slate-500">{String(label)}</dt>
+                          <dd className="font-semibold">{formatINR(Number(value))}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </CardContent>
+                </Card>
+                <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+                  <CardHeader>
+                    <CardTitle className="text-xl font-bold">Information checks</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3">
+                    {missingSalary && (
+                      <WarningBanner title="Missing salary amount">
+                        Salary was selected but no gross salary was entered.
+                      </WarningBanner>
+                    )}
+                    {unsupported && (
+                      <UnsupportedCaseBanner>
+                        Foreign or complex residency answers are not fully supported.
+                      </UnsupportedCaseBanner>
+                    )}
+                    {!missingSalary && !unsupported && (
+                      <div className="flex items-center gap-3 rounded-2xl bg-emerald-50 p-4 text-sm text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200">
+                        <Check className="size-5" />
+                        No blocking sample-data warnings found.
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </section>
+            </TabsContent>
+          </Tabs>
         </section>
         <div className="mt-6 flex flex-wrap gap-3 print:hidden">
           <Button
