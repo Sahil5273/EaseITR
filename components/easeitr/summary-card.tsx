@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { cn } from "@/lib/utils";
 
 export function SummaryCard({
@@ -15,7 +16,16 @@ export function SummaryCard({
   tone?: "neutral" | "positive" | "warning";
 }) {
   return (
-    <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_24px_rgba(15,23,42,0.035)] dark:border-slate-800 dark:bg-slate-900">
+    <SpotlightCard
+      className="p-5 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.04)]"
+      spotlightColor={
+        tone === "positive"
+          ? "rgba(16, 185, 129, 0.18)"
+          : tone === "warning"
+            ? "rgba(217, 119, 6, 0.15)"
+            : "rgba(99, 102, 241, 0.12)"
+      }
+    >
       <div className="flex items-start justify-between gap-4">
         <p className="text-sm font-medium text-slate-500 dark:text-slate-400">
           {label}
@@ -43,6 +53,6 @@ export function SummaryCard({
         {value}
       </p>
       {note && <p className="mt-2 text-xs leading-5 text-slate-500">{note}</p>}
-    </article>
+    </SpotlightCard>
   );
 }

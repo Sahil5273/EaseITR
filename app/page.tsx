@@ -29,6 +29,11 @@ import { Button } from "@/components/ui/button";
 import { AppShellHeader } from "@/components/easeitr/app-shell";
 import { Brand } from "@/components/easeitr/brand";
 
+import { SpotlightCard } from "@/components/ui/spotlight-card";
+import { BorderBeam } from "@/components/ui/border-beam";
+import { ShimmerButton } from "@/components/ui/shimmer-button";
+import { BentoGrid, BentoCard } from "@/components/ui/bento-grid";
+
 const incomeTypes = [
   { icon: WalletCards, label: "Salary & pension" },
   { icon: Landmark, label: "Bank interest" },
@@ -82,16 +87,10 @@ export default function HomePage() {
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300">
               Answer plain-language questions, understand your income picture, estimate tax liability, compare tax regimes, assist with document extraction, and see which ITR form may apply—without tax jargon.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button
-                size="lg"
-                asChild
-                className="h-12 rounded-xl bg-emerald-700 px-6 text-base text-white hover:bg-emerald-800"
-              >
-                <Link href="/assessment">
-                  Start tax assessment <ArrowRight className="ml-2 size-4" aria-hidden="true" />
-                </Link>
-              </Button>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <ShimmerButton onClick={() => window.location.href = "/assessment"}>
+                Start tax assessment <ArrowRight className="ml-1.5 size-4" aria-hidden="true" />
+              </ShimmerButton>
               <Button
                 size="lg"
                 variant="outline"
@@ -118,7 +117,8 @@ export default function HomePage() {
             className="relative mx-auto w-full max-w-xl"
             aria-label="Sample assessment summary preview"
           >
-            <div className="overflow-hidden rounded-[1.75rem] border border-border bg-card shadow-lg dark:border-slate-800 dark:bg-slate-900">
+            <SpotlightCard className="p-0 shadow-xl border-emerald-500/20">
+              <BorderBeam size={160} duration={10} colorFrom="#10b981" colorTo="#059669" />
               <div className="flex items-center justify-between border-b border-slate-100 px-5 py-4 dark:border-slate-800 sm:px-6">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
@@ -179,7 +179,7 @@ export default function HomePage() {
                   <HelpCircle className="mt-0.5 size-4 shrink-0" aria-hidden="true" /> Estimates are for guidance only and are not a filed tax return.
                 </div>
               </div>
-            </div>
+            </SpotlightCard>
           </div>
         </div>
       </section>
@@ -197,7 +197,7 @@ export default function HomePage() {
             We break the assessment into 10 manageable sections and explain what each answer changes.
           </p>
         </div>
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
+        <BentoGrid className="mt-10 md:grid-cols-3">
           {[
             [
               "01",
@@ -215,20 +215,14 @@ export default function HomePage() {
               "See a sample tax estimate and the plain-language reasons behind an ITR recommendation.",
             ],
           ].map(([number, title, copy]) => (
-            <article
+            <BentoCard
               key={number}
-              className="rounded-3xl border border-border bg-card p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900"
-            >
-              <span className="font-mono text-sm font-bold text-emerald-700 dark:text-emerald-400">
-                {number}
-              </span>
-              <h3 className="mt-8 text-xl font-bold tracking-tight">{title}</h3>
-              <p className="mt-3 leading-7 text-slate-600 dark:text-slate-400">
-                {copy}
-              </p>
-            </article>
+              title={title}
+              description={copy}
+              icon={<span className="font-mono text-sm font-bold">{number}</span>}
+            />
           ))}
-        </div>
+        </BentoGrid>
       </section>
 
       <section className="border-y border-slate-200 bg-slate-50 py-20 dark:border-slate-800 dark:bg-slate-900/50">

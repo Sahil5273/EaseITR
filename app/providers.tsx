@@ -5,6 +5,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { AssessmentProvider } from "@/lib/state/assessment-context";
 import { WebMCPBridge } from "@/components/easeitr/webmcp-bridge";
 
+import { SmoothScrollProvider } from "@/components/ui/smooth-scroll-provider";
+
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
@@ -13,10 +15,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <AssessmentProvider>
-        <WebMCPBridge />
-        {children}
-      </AssessmentProvider>
+      <SmoothScrollProvider>
+        <AssessmentProvider>
+          <WebMCPBridge />
+          {children}
+        </AssessmentProvider>
+      </SmoothScrollProvider>
       <Toaster richColors position="top-right" />
     </ThemeProvider>
   );

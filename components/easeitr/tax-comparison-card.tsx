@@ -1,5 +1,6 @@
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { BorderBeam } from "@/components/ui/border-beam";
 import { formatINR } from "@/lib/domain/constants";
 import type { RegimeComparison } from "@/lib/domain/types";
 
@@ -8,8 +9,10 @@ export function TaxComparisonCard({
 }: {
   comparison: RegimeComparison;
 }) {
+  const isNewSuggested = comparison.suggestedRegime === "new";
+
   return (
-    <article className="rounded-3xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+    <article className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-sm font-semibold text-slate-500">
@@ -19,11 +22,12 @@ export function TaxComparisonCard({
         </div>
         <Badge className="rounded-full bg-emerald-100 text-emerald-800 hover:bg-emerald-100 dark:bg-emerald-950 dark:text-emerald-300">
           <CheckCircle2 className="mr-1 size-3.5" />
-          {comparison.suggestedRegime === "new" ? "New" : "Old"} appears lower
+          {isNewSuggested ? "New" : "Old"} regime lower
         </Badge>
       </div>
       <div className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
-        <div className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800">
+        <div className="relative overflow-hidden rounded-2xl bg-slate-50 p-4 dark:bg-slate-800">
+          {!isNewSuggested && <BorderBeam size={120} duration={8} />}
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
             Old regime
           </p>
@@ -33,11 +37,12 @@ export function TaxComparisonCard({
           <p className="mt-1 text-xs text-slate-500">Estimated liability</p>
         </div>
         <ArrowRight className="mx-auto hidden size-5 text-slate-400 sm:block" />
-        <div className="rounded-2xl bg-emerald-50 p-4 dark:bg-emerald-950/50">
+        <div className="relative overflow-hidden rounded-2xl bg-emerald-50/80 p-4 border border-emerald-200/60 dark:bg-emerald-950/50 dark:border-emerald-800/60">
+          {isNewSuggested && <BorderBeam size={140} duration={8} colorFrom="#10b981" colorTo="#059669" />}
           <p className="text-xs font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">
             New regime
           </p>
-          <p className="mt-2 text-2xl font-bold">
+          <p className="mt-2 text-2xl font-bold text-emerald-950 dark:text-emerald-100">
             {formatINR(comparison.newRegime.estimatedTax)}
           </p>
           <p className="mt-1 text-xs text-emerald-800/80 dark:text-emerald-300/80">
