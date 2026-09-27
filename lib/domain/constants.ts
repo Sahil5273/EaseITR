@@ -107,6 +107,12 @@ export const EMPTY_ASSESSMENT: AssessmentData = {
   sectionStatuses: {},
   confirmed: false,
   updatedAt: "",
+  filingMode: "ca-pack",
+  capitalGainLines: [],
+  reviewedDocuments: [],
+  importedFields: [],
+  mismatchResolutions: {},
+  selfFileReady: false,
 };
 
 export const formatINR = (value: number, compact = false) =>

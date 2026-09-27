@@ -57,19 +57,23 @@ function estimate(data: AssessmentData, regime: "old" | "new"): TaxEstimate {
   };
 }
 
+export function compareSampleRegimes(data: AssessmentData): RegimeComparison {
+  const oldRegime = estimate(data, "old");
+  const newRegime = estimate(data, "new");
+  const suggestedRegime =
+    oldRegime.estimatedTax < newRegime.estimatedTax ? "old" : "new";
+  return {
+    oldRegime,
+    newRegime,
+    suggestedRegime,
+    difference: Math.abs(oldRegime.estimatedTax - newRegime.estimatedTax),
+  };
+}
+
 export const mockTaxCalculationService: TaxCalculationService = {
   async compareRegimes(data) {
     await wait(180);
-    const oldRegime = estimate(data, "old");
-    const newRegime = estimate(data, "new");
-    const suggestedRegime =
-      oldRegime.estimatedTax < newRegime.estimatedTax ? "old" : "new";
-    return {
-      oldRegime,
-      newRegime,
-      suggestedRegime,
-      difference: Math.abs(oldRegime.estimatedTax - newRegime.estimatedTax),
-    } satisfies RegimeComparison;
+    return compareSampleRegimes(data);
   },
 };
 

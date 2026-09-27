@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3,
+  ClipboardList,
   FileText,
   HelpCircle,
   Home,
@@ -21,6 +22,7 @@ import {
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Brand } from "./brand";
+import { FilingModeBar } from "./filing-panels";
 import { ThemeToggle } from "./theme-toggle";
 
 export const navItems = [
@@ -28,6 +30,7 @@ export const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
   { href: "/assessment", label: "Assessment", icon: FileText },
   { href: "/documents", label: "Documents", icon: FileText },
+  { href: "/results", label: "Results", icon: ClipboardList },
   { href: "/help", label: "Help", icon: HelpCircle },
   { href: "/settings", label: "Settings", icon: Settings2 },
 ];
@@ -127,6 +130,7 @@ export function AppShell({
   return (
     <div className="min-h-screen bg-background text-foreground">
       <AppShellHeader />
+      <FilingModeBar />
       <main
         className={cn(
           "mx-auto w-full py-6 sm:py-8 lg:py-8",

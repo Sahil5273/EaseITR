@@ -10,6 +10,7 @@ import {
 } from "react";
 
 import { EMPTY_ASSESSMENT } from "@/lib/domain/constants";
+import { normalizeAssessment } from "@/lib/domain/filing";
 import type { AssessmentData } from "@/lib/domain/types";
 import { mockAssessmentService } from "@/lib/services/mocks/assessment-service";
 import { sampleProfiles } from "@/lib/services/mocks/seed-data";
@@ -38,7 +39,7 @@ export function AssessmentProvider({
   useEffect(() => {
     const saved = mockAssessmentService.load();
     const handle = window.setTimeout(() => {
-      if (saved) setData(saved);
+      if (saved) setData(normalizeAssessment(saved));
       setHydrated(true);
     }, 0);
     return () => window.clearTimeout(handle);
@@ -56,13 +57,13 @@ export function AssessmentProvider({
 
   const update = useCallback(
     (updater: (current: AssessmentData) => AssessmentData) => {
-      setData((current) => updater(current));
+      setData((current) => normalizeAssessment(updater(current)));
     },
     [],
   );
 
   const loadSample = useCallback((profile: keyof typeof sampleProfiles) => {
-    const sample = structuredClone(sampleProfiles[profile]);
+    const sample = normalizeAssessment(sampleProfiles[profile]);
     setData(sample);
     mockAssessmentService.save(sample);
     setSavedAt(new Date().toISOString());

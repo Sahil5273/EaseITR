@@ -125,7 +125,8 @@ export type DocumentType =
   | "rent-receipt"
   | "donation-receipt"
   | "insurance-proof"
-  | "investment-proof";
+  | "investment-proof"
+  | "expense-bill";
 
 export type DocumentStatus =
   "idle" | "uploading" | "processing" | "complete" | "failed";
@@ -233,6 +234,48 @@ export type SectionStatus =
   | "completed"
   | "skipped";
 
+export type FilingMode = "ca-pack" | "self-file";
+
+export type CapitalGainAssetType =
+  | "equity-share"
+  | "equity-mutual-fund"
+  | "property"
+  | "other";
+
+export interface CapitalGainLine {
+  id: string;
+  assetType: CapitalGainAssetType;
+  purchaseDate: string;
+  saleDate: string;
+  cost: number;
+  saleValue: number;
+}
+
+export type ImportTarget =
+  | "salary.grossSalary"
+  | "taxPayments.tds"
+  | "otherIncome.savingsInterest"
+  | "otherIncome.fixedDepositInterest"
+  | "capitalGains.shortTermGains"
+  | "capitalGains.longTermGains"
+  | "houseProperty.loanInterest";
+
+export interface ImportedField {
+  documentId: string;
+  documentName: string;
+  documentType: DocumentType;
+  fieldId: string;
+  label: string;
+  target: ImportTarget;
+  amount: number;
+}
+
+export type MismatchResolution =
+  | "open"
+  | "use-document"
+  | "keep-entered"
+  | "left-for-ca";
+
 export interface AssessmentData {
   id: string;
   status: AssessmentStatus;
@@ -253,4 +296,10 @@ export interface AssessmentData {
   sectionStatuses: Record<string, SectionStatus>;
   confirmed: boolean;
   updatedAt: string;
+  filingMode: FilingMode;
+  capitalGainLines: CapitalGainLine[];
+  reviewedDocuments: UploadedDocument[];
+  importedFields: ImportedField[];
+  mismatchResolutions: Record<string, MismatchResolution>;
+  selfFileReady: boolean;
 }

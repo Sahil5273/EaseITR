@@ -20,7 +20,8 @@ import {
   YesNoSelector,
 } from "./form-controls";
 import { InfoNote, UnsupportedCaseBanner, WarningBanner } from "./feedback";
-import type { AssessmentData } from "@/lib/domain/types";
+import type { AssessmentData, CapitalGainLine } from "@/lib/domain/types";
+import { applyCapitalGainLines, holdingClass } from "@/lib/domain/filing";
 import { WIZARD_STEPS, type WizardStepSlug } from "@/lib/domain/constants";
 import { activitySchema, type ActivityFormValues } from "@/lib/domain/schemas";
 
@@ -379,6 +380,16 @@ export function CapitalGainsSection({
       ...current,
       capitalGains: { ...current.capitalGains, [key]: value },
     }));
+  const commitLines = (lines: CapitalGainLine[]) =>
+    update((current) =>
+      applyCapitalGainLines({ ...current, capitalGainLines: lines }),
+    );
+  const commitLine = (id: string, patch: Partial<CapitalGainLine>) =>
+    commitLines(
+      data.capitalGainLines.map((line) =>
+        line.id === id ? { ...line, ...patch } : line,
+      ),
+    );
   return (
     <div className="space-y-5">
       <QuestionCard
@@ -442,6 +453,123 @@ export function CapitalGainsSection({
             />
           </div>
         </Grid>
+      </QuestionCard>
+      <QuestionCard
+        title="Sale worksheet"
+        description="Each dated line rolls into the short-term and long-term totals above."
+        why="Listed equity uses a 365-day sample split. Property and other assets use 730 days. This is not an indexation or exemption calculation."
+      >
+        <div className="space-y-4">
+          {data.capitalGainLines.map((line, index) => (
+            <div
+              key={line.id}
+              className="rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
+            >
+              <div className="mb-3 flex items-center justify-between gap-3">
+                <p className="text-sm font-semibold">Sale {index + 1}</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-slate-500">
+                  {holdingClass(line)}
+                </p>
+              </div>
+              <Grid>
+                <SelectField
+                  label="Asset"
+                  value={line.assetType}
+                  onChange={(event) =>
+                    commitLine(line.id, {
+                      assetType: event.target.value as CapitalGainLine["assetType"],
+                    })
+                  }
+                >
+                  <NativeSelectOption value="equity-share">
+                    Listed equity share
+                  </NativeSelectOption>
+                  <NativeSelectOption value="equity-mutual-fund">
+                    Equity mutual fund
+                  </NativeSelectOption>
+                  <NativeSelectOption value="property">
+                    Land or property
+                  </NativeSelectOption>
+                  <NativeSelectOption value="other">Other asset</NativeSelectOption>
+                </SelectField>
+                <div className="space-y-2">
+                  <Label htmlFor={`${line.id}-purchase`}>Purchase date</Label>
+                  <Input
+                    id={`${line.id}-purchase`}
+                    type="date"
+                    value={line.purchaseDate}
+                    onChange={(event) =>
+                      commitLine(line.id, { purchaseDate: event.target.value })
+                    }
+                    className="h-11 rounded-xl"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor={`${line.id}-sale`}>Sale date</Label>
+                  <Input
+                    id={`${line.id}-sale`}
+                    type="date"
+                    value={line.saleDate}
+                    onChange={(event) =>
+                      commitLine(line.id, { saleDate: event.target.value })
+                    }
+                    className="h-11 rounded-xl"
+                  />
+                </div>
+                <CurrencyInput
+                  label="Cost"
+                  value={line.cost}
+                  onChange={(value) => commitLine(line.id, { cost: value })}
+                />
+                <CurrencyInput
+                  label="Sale value"
+                  value={line.saleValue}
+                  onChange={(value) => commitLine(line.id, { saleValue: value })}
+                />
+              </Grid>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="mt-3"
+                onClick={() =>
+                  commitLines(
+                    data.capitalGainLines.filter((item) => item.id !== line.id),
+                  )
+                }
+              >
+                Remove sale
+              </Button>
+            </div>
+          ))}
+          {data.capitalGainLines.some((line) => holdingClass(line) === "undated") && (
+            <WarningBanner title="A sale has no usable dates">
+              Undated lines stay out of the short-term and long-term totals
+              until both dates are entered and the sale is on or after the
+              purchase.
+            </WarningBanner>
+          )}
+          <Button
+            type="button"
+            variant="outline"
+            className="rounded-xl"
+            onClick={() =>
+              commitLines([
+                ...data.capitalGainLines,
+                {
+                  id: crypto.randomUUID(),
+                  assetType: "equity-share",
+                  purchaseDate: "",
+                  saleDate: "",
+                  cost: 0,
+                  saleValue: 0,
+                },
+              ])
+            }
+          >
+            Add a sale
+          </Button>
+        </div>
       </QuestionCard>
     </div>
   );
@@ -516,11 +644,18 @@ export function TradingSection({
               onChange={(value) => setTrading("maintainsBooks", value)}
             />
           </Grid>
-          <div className="mt-6">
+          <div className="mt-6 space-y-4">
+            <YesNoSelector
+              label="Could a tax audit apply?"
+              value={data.trading.auditMayApply}
+              onChange={(value) => setTrading("auditMayApply", value)}
+              description="Yes locks this assessment to the CA path. Choose yes when turnover is high, profit looks very low, or you are unsure."
+            />
             <WarningBanner title="Tax-audit check needed">
-              This prototype does not determine audit applicability. Turnover,
-              profit percentage and other conditions should be reviewed
-              professionally.
+              Futures and options are generally discussed as business income.
+              Intraday equity is generally discussed as speculative business.
+              This screen does not decide audit applicability. A yes answer
+              sends the file to the CA pack.
             </WarningBanner>
           </div>
         </QuestionCard>
@@ -633,6 +768,14 @@ export function BusinessSection({
           description="This is not a legal eligibility decision."
         />
       </Grid>
+      <div className="mt-6">
+        <InfoNote>
+          Presumptive taxation under sections 44AD and 44ADA is only a flag you
+          set here. If the receipts, profession, or books position is unclear,
+          leave the flag off and use the CA pack. The CA will be asked whether
+          those sections actually apply.
+        </InfoNote>
+      </div>
     </QuestionCard>
   );
 }
@@ -733,6 +876,13 @@ export function DeductionsSection({
           />
         ))}
       </Grid>
+      <div className="mt-6">
+        <InfoNote>
+          In this sample, 80C, 80D, and the extra NPS amount are counted only
+          under the old regime. The new-regime sample ignores them. Employer
+          NPS is not calculated separately yet.
+        </InfoNote>
+      </div>
     </QuestionCard>
   );
 }

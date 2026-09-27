@@ -21,7 +21,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { formatINR } from "@/lib/domain/constants";
+import { formatINR, WIZARD_STEPS } from "@/lib/domain/constants";
+import { requiresCaReview } from "@/lib/domain/filing";
 import type {
   ITRRecommendation,
   RegimeComparison,
@@ -33,8 +34,13 @@ import {
 } from "@/lib/services/mocks/tax-services";
 import { sampleProfiles } from "@/lib/services/mocks/seed-data";
 import { useAssessment } from "@/lib/state/assessment-context";
-
-import { WIZARD_STEPS } from "@/lib/domain/constants";
+import {
+  AdvanceTaxPanel,
+  CaPack,
+  RegimeWhatIf,
+  SampleWorking,
+  SelfFileGate,
+} from "./filing-panels";
 
 export function RuleExplanationList({ rules }: { rules: RuleExplanation[] }) {
   return (
@@ -104,7 +110,7 @@ export function ResultsClient() {
   const router = useRouter();
   const { data, clear } = useAssessment();
   const assessment =
-    data.status === "not-started" ? sampleProfiles.trader : data;
+    data.status === "not-started" ? sampleProfiles.salaried : data;
   const [recommendation, setRecommendation] =
     useState<ITRRecommendation | null>(null);
   const [comparison, setComparison] = useState<RegimeComparison | null>(null);
@@ -130,6 +136,7 @@ export function ResultsClient() {
     assessment.profile.residentialStatus !== "resident" ||
     assessment.profile.hasForeignAssets ||
     assessment.profile.hasForeignIncome;
+  const hideSampleTax = requiresCaReview(assessment);
 
   const skippedNames = (assessment.skippedSections || [])
     .map(
@@ -218,7 +225,14 @@ export function ResultsClient() {
                 </div>
               )}
               <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                {comparison ? (
+                {hideSampleTax ? (
+                  <div className="sm:col-span-2 xl:col-span-4">
+                    <WarningBanner title="Sample tax figure hidden">
+                      This case stays on the CA path, so the payable and refund
+                      figures are not shown as if they were ready to file.
+                    </WarningBanner>
+                  </div>
+                ) : comparison ? (
                   <>
                     <SummaryCard
                       label="Estimated total income"
@@ -249,7 +263,7 @@ export function ResultsClient() {
                 )}
               </section>
               <section className="grid gap-5 xl:grid-cols-[1.15fr_0.85fr]">
-                {comparison ? (
+                {hideSampleTax ? null : comparison ? (
                   <TaxComparisonCard comparison={comparison} />
                 ) : (
                   <Skeleton className="h-80 rounded-3xl" />
@@ -349,6 +363,13 @@ export function ResultsClient() {
               </section>
             </TabsContent>
           </Tabs>
+        </section>
+        <section className="mt-8 space-y-5">
+          <SampleWorking data={assessment} />
+          <RegimeWhatIf data={assessment} />
+          <AdvanceTaxPanel data={assessment} />
+          <CaPack data={assessment} />
+          <SelfFileGate data={assessment} />
         </section>
         <div className="mt-6 flex flex-wrap gap-3 print:hidden">
           <Button

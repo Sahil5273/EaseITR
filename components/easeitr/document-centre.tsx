@@ -31,6 +31,9 @@ import type {
   VerificationStatus,
 } from "@/lib/domain/types";
 import { mockDocumentExtractionService } from "@/lib/services/mocks/document-service";
+import { importAcceptedFields } from "@/lib/domain/filing";
+import { useAssessment } from "@/lib/state/assessment-context";
+import { DocumentChecklist, MismatchList } from "./filing-panels";
 
 const documentTypes: Array<{
   type: DocumentType;
@@ -84,6 +87,11 @@ const documentTypes: Array<{
     type: "investment-proof",
     label: "Investment proofs",
     hint: "Eligible investments",
+  },
+  {
+    type: "expense-bill",
+    label: "Freelance or business bill",
+    hint: "Vendor, date, and amount",
   },
 ];
 
@@ -141,10 +149,10 @@ export function ExtractionStatus({
 
 export function ExtractedFieldEditor({
   field,
-  onStatus,
+  onCommit,
 }: {
   field: ExtractedDocumentField;
-  onStatus: (status: VerificationStatus) => void;
+  onCommit: (status: VerificationStatus, value: string) => void;
 }) {
   const [editing, setEditing] = useState(false);
   const [value, setValue] = useState(String(field.normalizedValue ?? ""));
@@ -187,7 +195,7 @@ export function ExtractedFieldEditor({
           size="xs"
           variant="ghost"
           onClick={() => {
-            onStatus("accepted");
+            onCommit("accepted", value);
             toast.success(`${field.label} accepted`);
           }}
         >
@@ -198,14 +206,14 @@ export function ExtractedFieldEditor({
           size="xs"
           variant="ghost"
           onClick={() => {
-            if (editing) onStatus("edited");
+            if (editing) onCommit("edited", value);
             setEditing(!editing);
           }}
         >
           <Pencil />
           {editing ? "Save edit" : "Edit"}
         </Button>
-        <Button size="xs" variant="ghost" onClick={() => onStatus("rejected")}>
+        <Button size="xs" variant="ghost" onClick={() => onCommit("rejected", value)}>
           <X />
           Reject
         </Button>
@@ -319,21 +327,68 @@ export function DocumentUploader({
 }
 
 export function DocumentCentre() {
+  const { data, update } = useAssessment();
   const [selectedType, setSelectedType] = useState<DocumentType>("form-16");
-  const [document, setDocument] = useState<UploadedDocument | null>(null);
-  const setFieldStatus = (id: string, status: VerificationStatus) =>
-    setDocument((current) =>
-      current
-        ? {
-            ...current,
-            fields: current.fields.map((field) =>
-              field.id === id
-                ? { ...field, verificationStatus: status }
-                : field,
-            ),
-          }
-        : null,
+  const [draft, setDraft] = useState<{
+    type: DocumentType;
+    document: UploadedDocument | null;
+  } | null>(null);
+  const document =
+    draft?.type === selectedType
+      ? draft.document
+      : (data.reviewedDocuments.find((item) => item.type === selectedType) ??
+        null);
+  const numericFields = new Set([
+    "salary",
+    "tds",
+    "savings-interest",
+    "fd-interest",
+    "stcg",
+    "ltcg",
+    "loan-interest",
+  ]);
+
+  const storeDocument = (next: UploadedDocument | null) => {
+    setDraft({ type: selectedType, document: next });
+    if (!next) {
+      update((current) => ({
+        ...current,
+        reviewedDocuments: current.reviewedDocuments.filter(
+          (item) => item.type !== selectedType,
+        ),
+        importedFields: current.importedFields.filter(
+          (item) => item.documentType !== selectedType,
+        ),
+        status: current.status === "not-started" ? "in-progress" : current.status,
+      }));
+      return;
+    }
+    update((current) =>
+      importAcceptedFields(
+        {
+          ...current,
+          status: current.status === "not-started" ? "in-progress" : current.status,
+        },
+        next,
+      ),
     );
+  };
+
+  const commitField = (id: string, status: VerificationStatus, value: string) => {
+    if (!document) return;
+    const next: UploadedDocument = {
+      ...document,
+      fields: document.fields.map((field) => {
+        if (field.id !== id) return field;
+        const numeric = numericFields.has(field.id)
+          ? Number(value.replace(/\D/g, "")) || 0
+          : value;
+        return { ...field, verificationStatus: status, normalizedValue: numeric };
+      }),
+    };
+    storeDocument(next);
+  };
+
   return (
     <AppShell width="wide">
       <div className="max-w-3xl">
@@ -344,8 +399,9 @@ export function DocumentCentre() {
           Document centre
         </h1>
         <p className="mt-3 text-lg leading-8 text-slate-600 dark:text-slate-300">
-          Preview how financial documents could be uploaded, processed and
-          verified. No real OCR or AI extraction happens in this prototype.
+          Add a statement, accept the fields you trust, and those amounts are
+          written into the assessment. Parsing is still a mock. Nothing is
+          uploaded to a server.
         </p>
       </div>
       <div className="mt-6">
@@ -358,6 +414,14 @@ export function DocumentCentre() {
       </div>
       <section className="mt-8">
         <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">
+          Documents this assessment expects
+        </h2>
+        <div className="mt-4">
+          <DocumentChecklist data={data} />
+        </div>
+      </section>
+      <section className="mt-8">
+        <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">
           1. Choose a document type
         </h2>
         <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -368,7 +432,7 @@ export function DocumentCentre() {
               aria-pressed={selectedType === item.type}
               onClick={() => {
                 setSelectedType(item.type);
-                setDocument(null);
+                setDraft(null);
               }}
               className={cn(
                 "rounded-2xl border bg-white p-4 text-left transition-all hover:-translate-y-0.5 hover:shadow-md dark:bg-slate-900",
@@ -398,7 +462,7 @@ export function DocumentCentre() {
         <div className="mt-4">
           <DocumentUploader
             selectedType={selectedType}
-            onDocument={setDocument}
+            onDocument={storeDocument}
           />
         </div>
       </section>
@@ -417,7 +481,7 @@ export function DocumentCentre() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setDocument(null)}
+                onClick={() => setDraft({ type: selectedType, document: null })}
               >
                 <RotateCcw />
                 Replace
@@ -426,7 +490,7 @@ export function DocumentCentre() {
                 variant="outline"
                 size="sm"
                 className="text-red-600"
-                onClick={() => setDocument(null)}
+                onClick={() => storeDocument(null)}
               >
                 <Trash2 />
                 Delete
@@ -452,9 +516,9 @@ export function DocumentCentre() {
             <div className="space-y-3">
               {document.fields.map((field) => (
                 <ExtractedFieldEditor
-                  key={field.id}
+                  key={`${field.id}-${field.verificationStatus}`}
                   field={field}
-                  onStatus={(status) => setFieldStatus(field.id, status)}
+                  onCommit={(status, value) => commitField(field.id, status, value)}
                 />
               ))}
               <div className="rounded-2xl bg-slate-100 p-4 text-xs leading-5 text-slate-500 dark:bg-slate-800">
@@ -466,6 +530,14 @@ export function DocumentCentre() {
           </div>
         </section>
       )}
+      <section className="mt-8">
+        <h2 className="text-sm font-bold uppercase tracking-[0.14em] text-slate-500">
+          Statement comparisons
+        </h2>
+        <div className="mt-4">
+          <MismatchList data={data} />
+        </div>
+      </section>
     </AppShell>
   );
 }

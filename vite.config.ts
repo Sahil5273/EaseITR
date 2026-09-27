@@ -5,6 +5,8 @@ import { sites } from "./build/sites-vite-plugin";
 
 const hostingConfig = { d1: null, r2: null };
 const { d1, r2 } = hostingConfig;
+const SITE_CREATOR_PLACEHOLDER_DATABASE_ID =
+  "00000000-0000-0000-0000-000000000000";
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";

@@ -1,5 +1,5 @@
 import { STORAGE_KEY } from "@/lib/domain/constants";
-import type { AssessmentData } from "@/lib/domain/types";
+import { normalizeAssessment } from "@/lib/domain/filing";
 import type { AssessmentService } from "../interfaces";
 
 export const mockAssessmentService: AssessmentService = {
@@ -8,7 +8,7 @@ export const mockAssessmentService: AssessmentService = {
     const saved = window.localStorage.getItem(STORAGE_KEY);
     if (!saved) return null;
     try {
-      return JSON.parse(saved) as AssessmentData;
+      return normalizeAssessment(JSON.parse(saved));
     } catch {
       return null;
     }
