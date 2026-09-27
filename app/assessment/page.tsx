@@ -99,8 +99,8 @@ export default function AssessmentIntroPage() {
           ],
           [
             FileText,
-            "Document simulation",
-            "Uploads and extracted fields are mock interactions in this phase.",
+            "Document reading",
+            "Upload Form 16, AIS, 26AS, broker statements, or bills. Fields are extracted automatically and you verify each one before it is saved.",
           ],
           [
             ShieldCheck,
