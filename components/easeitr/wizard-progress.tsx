@@ -14,7 +14,7 @@ export function ProgressSidebar({ current }: { current: WizardStepSlug }) {
 
   return (
     <aside className="hidden w-64 xl:w-72 shrink-0 lg:block">
-      <div className="sticky top-24 rounded-3xl border border-border bg-card p-4 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.04)] dark:border-slate-800 dark:bg-slate-900">
+      <div className="sticky top-24 rounded-3xl border border-border bg-card p-4 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.04)]">
         <p className="px-3 pb-3 text-sm font-semibold text-muted-foreground">
           Assessment progress
         </p>
@@ -41,7 +41,7 @@ export function ProgressSidebar({ current }: { current: WizardStepSlug }) {
                   "flex items-center justify-between rounded-xl px-3 py-2.5 text-sm transition-colors",
                   isCurrent
                     ? "bg-emerald-50 font-semibold text-emerald-800 dark:bg-emerald-950 dark:text-emerald-200"
-                    : "text-slate-600 hover:bg-slate-50 dark:text-slate-400 dark:hover:bg-slate-800",
+                    : "text-muted-foreground hover:bg-muted",
                 )}
               >
                 <div className="flex items-center gap-2.5 min-w-0 pr-1">

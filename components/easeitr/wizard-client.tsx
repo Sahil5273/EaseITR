@@ -229,7 +229,7 @@ export function WizardClient({ step }: { step: WizardStepSlug }) {
 
       {/* Skip Confirmation Dialog */}
       <Dialog open={skipModalOpen} onOpenChange={setSkipModalOpen}>
-        <DialogContent className="rounded-2xl sm:max-w-md bg-card dark:bg-slate-900">
+        <DialogContent className="rounded-2xl sm:max-w-md bg-card">
           <DialogHeader>
             <DialogTitle>Skip this section?</DialogTitle>
             <DialogDescription className="mt-2 text-slate-600 dark:text-slate-300">

@@ -104,7 +104,7 @@ export function DashboardClient() {
           </Link>
         </Button>
       </div>
-      <section className="mt-7 rounded-3xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+      <section className="mt-7 rounded-3xl border border-border bg-card p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="font-semibold">Assessment completion</p>
@@ -160,7 +160,7 @@ export function DashboardClient() {
         ) : (
           <Skeleton className="h-80 rounded-3xl" />
         )}
-        <article className="rounded-3xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+        <article className="rounded-3xl border border-border bg-card p-5 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold text-slate-500">
@@ -223,7 +223,7 @@ export function DashboardClient() {
         </article>
       </section>
       <section className="mt-5 grid gap-5 lg:grid-cols-3">
-        <article className="rounded-3xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <article className="rounded-3xl border border-border bg-card p-5 dark:bg-card">
           <div className="flex items-center justify-between">
             <h2 className="font-bold">Taxes paid</h2>
             <CheckCircle2 className="size-5 text-emerald-600" />
@@ -234,14 +234,14 @@ export function DashboardClient() {
           <p className="mt-1 text-sm text-slate-500">
             Sample TDS and advance tax
           </p>
-          <div className="mt-5 rounded-xl bg-slate-50 p-3 text-sm dark:bg-slate-800">
+          <div className="mt-5 rounded-xl bg-muted p-3 text-sm">
             {estimate?.isRefund
               ? "Estimated refund"
               : "Estimated amount payable"}
             : <strong>{formatINR(estimate?.balance ?? 0)}</strong>
           </div>
         </article>
-        <article className="rounded-3xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <article className="rounded-3xl border border-border bg-card p-5">
           <h2 className="font-bold">Recent documents</h2>
           <div className="mt-4 space-y-3">
             {[
@@ -250,12 +250,12 @@ export function DashboardClient() {
             ].map(([name, state]) => (
               <div
                 key={name}
-                className="flex gap-3 rounded-xl bg-slate-50 p-3 dark:bg-slate-800"
+                className="flex gap-3 rounded-xl bg-muted p-3"
               >
                 <FileText className="size-5 text-emerald-600" />
                 <div>
                   <p className="text-sm font-semibold">{name}</p>
-                  <p className="mt-0.5 text-xs text-slate-500">{state}</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">{state}</p>
                 </div>
               </div>
             ))}
@@ -270,7 +270,7 @@ export function DashboardClient() {
             </Link>
           </Button>
         </article>
-        <article className="rounded-3xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+        <article className="rounded-3xl border border-border bg-card p-5">
           <h2 className="font-bold">Outstanding actions</h2>
           <ul className="mt-4 space-y-3 text-sm">
             <li className="flex gap-3">

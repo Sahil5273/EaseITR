@@ -4,7 +4,7 @@ import { DocumentCentre } from "@/components/easeitr/document-centre";
 export const metadata: Metadata = {
   title: "Document Extraction Centre",
   description:
-    "Simulate document upload and automated field verification for Form 16, interest certificates, and broker statements.",
+    "Read a Form 16, AIS, Form 26AS, broker statement, or bill after you sign in. You can choose the type, or let EaseITR choose it.",
 };
 
 export default function DocumentsPage() {

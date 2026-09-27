@@ -37,7 +37,7 @@ describe("document upload validation and extraction", () => {
     );
     expect(screen.getByText(/Uploading · 48%/)).toBeInTheDocument();
     rerender(<ExtractionStatus status="processing" progress={100} />);
-    expect(screen.getByText(/Mock extraction in progress/)).toBeInTheDocument();
+    expect(screen.getByText(/Reading the document/)).toBeInTheDocument();
     rerender(<ExtractionStatus status="complete" progress={100} />);
     expect(screen.getByText(/Extraction complete/)).toBeInTheDocument();
     rerender(<ExtractionStatus status="failed" progress={0} />);

@@ -12,10 +12,10 @@ export function TaxComparisonCard({
   const isNewSuggested = comparison.suggestedRegime === "new";
 
   return (
-    <article className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900 sm:p-6 shadow-sm">
+    <article className="relative overflow-hidden rounded-3xl border border-border bg-card p-5 sm:p-6 shadow-sm">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold text-slate-500">
+          <p className="text-sm font-semibold text-muted-foreground">
             Estimated comparison
           </p>
           <h2 className="mt-1 text-2xl font-semibold">Old vs new tax regime</h2>
@@ -26,7 +26,7 @@ export function TaxComparisonCard({
         </Badge>
       </div>
       <div className="mt-6 grid gap-3 sm:grid-cols-[1fr_auto_1fr] sm:items-center">
-        <div className="relative overflow-hidden rounded-2xl bg-slate-50 p-4 dark:bg-slate-800">
+        <div className="relative overflow-hidden rounded-2xl bg-muted p-4">
           {!isNewSuggested && <BorderBeam size={120} duration={8} />}
           <p className="text-sm font-semibold text-muted-foreground">
             Old regime

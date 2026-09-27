@@ -1,0 +1,7 @@
+GOOGLE_CLOUD_PROJECT: x-cds-502821
+DOCUMENT_BUCKET: easeitr-docs-x-cds-502821
+DOCUMENT_AI_LOCATION: asia-south1
+FORM_PROCESSOR: projects/342857978337/locations/asia-south1/processors/b0ac4a8869ed81ef
+INVOICE_PROCESSOR: projects/342857978337/locations/asia-south1/processors/4082a1173b9d6983
+GOOGLE_CLIENT_ID: 342857978337-7snvlfkcnjcrs7ldd2i7n6k3urpeb026.apps.googleusercontent.com
+ALLOWED_ORIGINS: "https://easeitr-cf2c3.web.app,https://easeitr-cf2c3.firebaseapp.com,http://localhost:5173,http://127.0.0.1:5173"

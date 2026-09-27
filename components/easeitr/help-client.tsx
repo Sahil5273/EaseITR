@@ -85,7 +85,7 @@ export function HelpClient() {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search capital gains, TDS, regimes…"
-            className="h-12 rounded-2xl bg-white pl-12 dark:bg-slate-900"
+            className="h-12 rounded-2xl bg-card pl-12"
             aria-label="Search tax guides"
           />
         </div>
@@ -94,7 +94,7 @@ export function HelpClient() {
         {filtered.map(([title, copy]) => (
           <article
             key={title}
-            className="rounded-3xl border border-slate-200 bg-white p-6 dark:border-slate-800 dark:bg-slate-900"
+            className="rounded-3xl border border-border bg-card p-6"
           >
             <div className="flex items-start justify-between gap-3">
               <span className="grid size-10 place-items-center rounded-xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">

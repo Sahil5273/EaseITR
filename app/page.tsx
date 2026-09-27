@@ -52,17 +52,17 @@ const faqs = [
   {
     question: "Are the tax calculations final?",
     answer:
-      "No. All calculations and recommendations shown here are estimates for demonstration. Your filing may need professional review, especially for complex income or residency situations.",
+      "The estimate is calculated in this browser from the rules in the prototype. It is not a filed return. Complex cases stay with a chartered accountant.",
   },
   {
     question: "Where is my information saved?",
     answer:
-      "In this frontend prototype, assessment answers are stored only in your browser when you choose to save. You can clear them at any time from Settings.",
+      "A copy stays in this browser. After you sign in with Google, the same assessment is also saved to your account. You can clear both from Settings.",
   },
   {
     question: "Can I upload Form 16 or broker statements?",
     answer:
-      "The document centre demonstrates that future workflow with sample extraction states. No real OCR or AI document processing is performed in this phase.",
+      "Yes, after you log in. EaseITR can choose the document type, or you can choose it. The file is deleted after it is read, and a figure is added only when you accept it.",
   },
 ];
 
@@ -261,7 +261,7 @@ export default function HomePage() {
           {
             icon: FileSearch,
             title: "Document-ready",
-            copy: "Preview how Form 16 and statement extraction could reduce manual entry in a future connected version.",
+            copy: "After you sign in, a Form 16, AIS, 26AS, broker statement, or bill can be read for you. You still accept each field.",
           },
           {
             icon: ShieldCheck,
@@ -271,7 +271,7 @@ export default function HomePage() {
           {
             icon: LockKeyhole,
             title: "Privacy in plain language",
-            copy: "Prototype answers stay in this browser. No real tax documents are uploaded to a backend in this phase.",
+            copy: "The assessment stays in this browser. Sign-in saves it to your account. A document is deleted after it is read.",
           },
         ].map(({ icon: Icon, title, copy }) => (
           <article key={title} className="p-2">
@@ -370,9 +370,10 @@ export default function HomePage() {
               className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-slate-600 dark:text-slate-400"
               aria-label="Footer navigation"
             >
-              <Link href="/settings">Privacy</Link>
-              <Link href="/help">Terms</Link>
-              <span className="text-slate-400 dark:text-slate-500">Contact details coming later</span>
+              <Link href="/privacy">Privacy policy</Link>
+              <Link href="/terms">Terms of service</Link>
+              <Link href="/costs">Running costs</Link>
+              <Link href="/limitations">Limitations</Link>
             </nav>
           </div>
           <div className="mt-8 border-t border-slate-200 pt-6 text-sm leading-6 text-slate-500 dark:border-slate-800 dark:text-slate-400">

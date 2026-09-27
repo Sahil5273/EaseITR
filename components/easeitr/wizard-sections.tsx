@@ -1099,7 +1099,7 @@ export function ReviewSection({
           review is recommended.
         </UnsupportedCaseBanner>
       )}
-      <div className="rounded-2xl border border-slate-200 bg-white p-5 dark:border-slate-800 dark:bg-slate-900">
+      <div className="rounded-2xl border border-border bg-card p-5">
         <label className="flex cursor-pointer items-start gap-3">
           <Checkbox
             checked={data.confirmed}

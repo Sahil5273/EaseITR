@@ -9,6 +9,8 @@ import {
   FileText,
   HelpCircle,
   Home,
+  LogIn,
+  LogOut,
   Menu,
   Settings2,
 } from "lucide-react";
@@ -24,6 +26,8 @@ import { cn } from "@/lib/utils";
 import { Brand } from "./brand";
 import { FilingModeBar } from "./filing-panels";
 import { ThemeToggle } from "./theme-toggle";
+import { useAuth } from "@/lib/state/auth-context";
+import { toast } from "sonner";
 
 export const navItems = [
   { href: "/", label: "Home", icon: Home },
@@ -79,6 +83,7 @@ export function Navigation({
 
 export function AppShellHeader() {
   const [open, setOpen] = useState(false);
+  const { user, signIn, signOutUser } = useAuth();
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur dark:border-slate-800 dark:bg-slate-900/95">
@@ -88,6 +93,21 @@ export function AppShellHeader() {
           <Navigation />
         </div>
         <div className="ml-auto flex items-center gap-1 lg:ml-0">
+          <Button
+            variant="ghost"
+            className="rounded-xl"
+            aria-label={user ? "Sign out" : "Sign in with Google"}
+            onClick={() => {
+              if (user) void signOutUser();
+              else
+                void signIn().catch(() =>
+                  toast.error("Google sign-in did not finish. Try again."),
+                );
+            }}
+          >
+            {user ? <LogOut /> : <LogIn />}
+            <span className="hidden md:inline">{user ? "Sign out" : "Sign in"}</span>
+          </Button>
           <ThemeToggle />
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
@@ -102,7 +122,7 @@ export function AppShellHeader() {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-[min(88vw,340px)] p-6 bg-card dark:bg-slate-900"
+              className="w-[min(88vw,340px)] p-6 bg-card"
             >
               <SheetTitle className="sr-only">Navigation menu</SheetTitle>
               <Brand />
@@ -143,6 +163,25 @@ export function AppShell({
       >
         {children}
       </main>
+      <footer className="border-t border-slate-200 dark:border-slate-800">
+        <nav
+          className="mx-auto flex max-w-5xl flex-wrap gap-x-5 gap-y-2 px-4 py-6 text-sm text-slate-500 sm:px-6 lg:px-8"
+          aria-label="Legal"
+        >
+          <Link href="/privacy" className="hover:text-emerald-800">
+            Privacy policy
+          </Link>
+          <Link href="/terms" className="hover:text-emerald-800">
+            Terms of service
+          </Link>
+          <Link href="/costs" className="hover:text-emerald-800">
+            Running costs
+          </Link>
+          <Link href="/limitations" className="hover:text-emerald-800">
+            Limitations
+          </Link>
+        </nav>
+      </footer>
     </div>
   );
 }

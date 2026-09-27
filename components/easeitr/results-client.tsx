@@ -48,7 +48,7 @@ export function RuleExplanationList({ rules }: { rules: RuleExplanation[] }) {
       {rules.map((rule) => (
         <div
           key={rule.id}
-          className="flex gap-3 rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
+          className="flex gap-3 rounded-2xl border border-border p-4"
         >
           {rule.outcome === "supports" ? (
             <Check className="mt-0.5 size-5 shrink-0 text-emerald-600" aria-hidden="true" />
@@ -75,7 +75,7 @@ export function ITRRecommendationCard({
   recommendation: ITRRecommendation;
 }) {
   return (
-    <article className="overflow-hidden rounded-3xl border border-emerald-200 bg-white shadow-sm dark:border-emerald-900 dark:bg-slate-900">
+    <article className="overflow-hidden rounded-3xl border border-emerald-200 bg-card shadow-sm dark:border-emerald-900">
       <div className="bg-emerald-700 px-6 py-5 text-white">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -184,7 +184,7 @@ export function ResultsClient() {
 
         <section className="mt-6">
           <Tabs defaultValue="overview" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 rounded-2xl bg-slate-100 p-1 dark:bg-slate-800 sm:w-[400px]">
+            <TabsList className="grid w-full grid-cols-2 rounded-2xl bg-muted p-1 sm:w-[400px]">
               <TabsTrigger value="overview" className="rounded-xl font-medium">
                 Regime & Form
               </TabsTrigger>
@@ -199,7 +199,7 @@ export function ResultsClient() {
                 ) : (
                   <Skeleton className="h-72 rounded-3xl" />
                 )}
-                <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+                <Card className="rounded-3xl border-border">
                   <CardHeader>
                     <CardTitle className="text-xl font-bold">Why this result appeared</CardTitle>
                     <CardDescription>
@@ -268,7 +268,7 @@ export function ResultsClient() {
                 ) : (
                   <Skeleton className="h-80 rounded-3xl" />
                 )}
-                <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+                <Card className="rounded-3xl border-border">
                   <CardHeader>
                     <CardTitle className="text-xl font-bold">Alternative forms</CardTitle>
                     <CardDescription>
@@ -279,7 +279,7 @@ export function ResultsClient() {
                     {recommendation?.alternatives.map((alternative) => (
                       <div
                         key={alternative.form}
-                        className="rounded-2xl bg-slate-50 p-4 dark:bg-slate-800"
+                        className="rounded-2xl bg-muted p-4"
                       >
                         <div className="flex items-center justify-between">
                           <p className="font-bold">{alternative.form}</p>
@@ -298,7 +298,7 @@ export function ResultsClient() {
             </TabsContent>
             <TabsContent value="breakdown" className="mt-6">
               <section className="grid gap-5 lg:grid-cols-2">
-                <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+                <Card className="rounded-3xl border-border">
                   <CardHeader>
                     <CardTitle className="text-xl font-bold">Income summary</CardTitle>
                   </CardHeader>
@@ -330,7 +330,7 @@ export function ResultsClient() {
                       ].map(([label, value]) => (
                         <div
                           key={String(label)}
-                          className="flex justify-between border-b border-slate-100 pb-3 last:border-0 dark:border-slate-800"
+                          className="flex justify-between border-b border-border/50 pb-3 last:border-0"
                         >
                           <dt className="text-slate-500">{String(label)}</dt>
                           <dd className="font-semibold">{formatINR(Number(value))}</dd>
@@ -339,7 +339,7 @@ export function ResultsClient() {
                     </dl>
                   </CardContent>
                 </Card>
-                <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+                <Card className="rounded-3xl border-border">
                   <CardHeader>
                     <CardTitle className="text-xl font-bold">Information checks</CardTitle>
                   </CardHeader>
@@ -393,7 +393,7 @@ export function ResultsClient() {
             Start over
           </Button>
         </div>
-        <div className="mt-8 flex gap-3 rounded-2xl bg-slate-900 p-5 text-sm leading-6 text-slate-200 print:border print:bg-white print:text-black">
+        <div className="mt-8 flex gap-3 rounded-2xl bg-foreground/10 p-5 text-sm leading-6 text-foreground/80 print:border print:text-black">
           <ShieldAlert className="mt-0.5 size-5 shrink-0 text-amber-400" />
           <p>
             EaseITR is an independent frontend prototype. This summary is not an

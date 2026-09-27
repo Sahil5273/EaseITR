@@ -91,7 +91,7 @@ export function DocumentChecklist({ data }: { data: AssessmentData }) {
       {needs.map((need) => (
         <li
           key={need.type}
-          className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
+          className="flex flex-wrap items-start justify-between gap-3 rounded-2xl border border-border p-4"
         >
           <div>
             <p className="font-semibold">{need.label}</p>
@@ -124,7 +124,7 @@ export function MismatchList({ data }: { data: AssessmentData }) {
       {rows.map((row) => (
         <article
           key={row.id}
-          className="rounded-2xl border border-slate-200 p-4 dark:border-slate-800"
+          className="rounded-2xl border border-border p-4"
         >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
@@ -169,7 +169,7 @@ export function SampleWorking({ data }: { data: AssessmentData }) {
   const regime = comparison.suggestedRegime;
   const estimate = regime === "old" ? comparison.oldRegime : comparison.newRegime;
   return (
-    <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+    <Card className="rounded-3xl border-border">
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Tax working</CardTitle>
         <CardDescription>
@@ -218,7 +218,7 @@ export function RegimeWhatIf({ data }: { data: AssessmentData }) {
   const comparison = compareSampleRegimes(with80cAmount(data, amount));
   if (requiresCaReview(data)) return null;
   return (
-    <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+    <Card className="rounded-3xl border-border">
       <CardHeader>
         <CardTitle className="text-xl font-bold">Regime what-if</CardTitle>
         <CardDescription>
@@ -263,7 +263,7 @@ export function AdvanceTaxPanel({ data }: { data: AssessmentData }) {
     data.taxPayments.tds + data.taxPayments.tcs,
   );
   return (
-    <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+    <Card className="rounded-3xl border-border">
       <CardHeader>
         <CardTitle className="text-xl font-bold">Advance-tax dates</CardTitle>
         <CardDescription>
@@ -306,7 +306,7 @@ export function CaPack({ data }: { data: AssessmentData }) {
           pack is a preparation file, not a filed return.
         </p>
       </div>
-      <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+      <Card className="rounded-3xl border-border">
         <CardHeader>
           <CardTitle className="text-xl font-bold">Income entered</CardTitle>
         </CardHeader>
@@ -384,7 +384,7 @@ export function SelfFileGate({ data }: { data: AssessmentData }) {
   }
   const blockers = selfFileBlockers(data);
   return (
-    <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
+    <Card className="rounded-3xl border-border">
       <CardHeader>
         <CardTitle className="text-xl font-bold">Self-file checklist</CardTitle>
         <CardDescription>
