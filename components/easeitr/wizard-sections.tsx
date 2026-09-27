@@ -863,7 +863,7 @@ export function DeductionsSection({
   return (
     <QuestionCard
       title="Common deductions"
-      description="Enter amounts paid or invested. Eligibility limits are not enforced in this prototype."
+      description="Enter amounts paid or invested. The old-regime computation caps 80C, 80D, and additional NPS."
       why="Many deductions are available only under the old regime, so they help make the comparison meaningful."
     >
       <Grid>
@@ -878,9 +878,9 @@ export function DeductionsSection({
       </Grid>
       <div className="mt-6">
         <InfoNote>
-          In this sample, 80C, 80D, and the extra NPS amount are counted only
-          under the old regime. The new-regime sample ignores them. Employer
-          NPS is not calculated separately yet.
+          80C, 80D, and additional NPS are used only in the old regime. 80C stops
+          at ₹1,50,000. The new regime ignores them. Employer NPS is not a
+          separate amount yet.
         </InfoNote>
       </div>
     </QuestionCard>

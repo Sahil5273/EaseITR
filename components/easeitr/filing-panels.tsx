@@ -160,43 +160,52 @@ export function SampleWorking({ data }: { data: AssessmentData }) {
   const hidden = requiresCaReview(data);
   if (hidden) {
     return (
-      <WarningBanner title="Sample tax figure hidden">
-        This case is on the CA path. The pack below is the output. Phase 2
-        replaces this sample formula with assessment-year slabs.
+      <WarningBanner title="Filing figure hidden">
+        This case stays on the CA path, so the payable figure is not shown as
+        a number to file from.
       </WarningBanner>
     );
   }
   const regime = comparison.suggestedRegime;
   const estimate = regime === "old" ? comparison.oldRegime : comparison.newRegime;
-  const lines = [
-    ["Income heads added", estimate.totalIncome],
-    ["Deductions in this sample", estimate.totalDeductions],
-    ["Taxable income", estimate.taxableIncome],
-    ["Sample tax", estimate.estimatedTax],
-    ["Taxes already entered", estimate.taxesPaid],
-    [estimate.isRefund ? "Sample refund" : "Sample payable", estimate.balance],
-  ] as const;
   return (
     <Card className="rounded-3xl border-slate-200 dark:border-slate-800">
       <CardHeader>
-        <CardTitle className="text-xl font-bold">Sample working</CardTitle>
+        <CardTitle className="text-xl font-semibold">Tax working</CardTitle>
         <CardDescription>
-          {regime === "old" ? "Old" : "New"} regime sample, using one flat rate
-          above a single threshold. This is not a slab computation.
+          {regime === "old" ? "Old" : "New"} regime for assessment year{" "}
+          {data.profile.assessmentYear}, using the slab table, cess, and the
+          section 87A rebate. Indexation, exemptions, and employer NPS are not
+          in this working.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <dl className="space-y-3 text-sm">
-          {lines.map(([label, value]) => (
+          {estimate.lines.map((line) => (
             <div
-              key={label}
+              key={line.label}
               className="flex justify-between gap-4 border-b border-slate-100 pb-3 last:border-0 dark:border-slate-800"
             >
-              <dt className="text-slate-500">{label}</dt>
-              <dd className="font-semibold">{formatINR(value)}</dd>
+              <dt className="text-slate-500">{line.label}</dt>
+              <dd className="font-semibold">{formatINR(line.amount)}</dd>
             </div>
           ))}
+          <div className="flex justify-between gap-4 border-b border-slate-100 pb-3 dark:border-slate-800">
+            <dt className="text-slate-500">Taxes already entered</dt>
+            <dd className="font-semibold">{formatINR(estimate.taxesPaid)}</dd>
+          </div>
+          <div className="flex justify-between gap-4">
+            <dt className="text-slate-500">
+              {estimate.isRefund ? "Refund after taxes paid" : "Payable after taxes paid"}
+            </dt>
+            <dd className="font-semibold">{formatINR(estimate.balance)}</dd>
+          </div>
         </dl>
+        <ul className="mt-4 space-y-2 text-sm leading-6 text-muted-foreground">
+          {estimate.notes.map((note) => (
+            <li key={note}>{note}</li>
+          ))}
+        </ul>
       </CardContent>
     </Card>
   );
@@ -213,8 +222,8 @@ export function RegimeWhatIf({ data }: { data: AssessmentData }) {
       <CardHeader>
         <CardTitle className="text-xl font-bold">Regime what-if</CardTitle>
         <CardDescription>
-          80C is counted only in the old-regime sample. The new-regime sample
-          ignores it.
+          80C is counted only in the old regime, and only up to ₹1,50,000. The
+          new regime ignores it.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -231,10 +240,10 @@ export function RegimeWhatIf({ data }: { data: AssessmentData }) {
           className="h-11 max-w-xs rounded-xl"
         />
         <p className="text-sm leading-6 text-slate-600 dark:text-slate-300">
-          At {formatINR(amount)} of 80C, the sample prefers the{" "}
+          At {formatINR(amount)} of 80C, this computation prefers the{" "}
           <strong>{comparison.suggestedRegime}</strong> regime by{" "}
-          {formatINR(comparison.difference)}. Old-regime sample tax{" "}
-          {formatINR(comparison.oldRegime.estimatedTax)}. New-regime sample tax{" "}
+          {formatINR(comparison.difference)}. Old-regime tax{" "}
+          {formatINR(comparison.oldRegime.estimatedTax)}. New-regime tax{" "}
           {formatINR(comparison.newRegime.estimatedTax)}.
         </p>
       </CardContent>
@@ -258,15 +267,14 @@ export function AdvanceTaxPanel({ data }: { data: AssessmentData }) {
       <CardHeader>
         <CardTitle className="text-xl font-bold">Advance-tax dates</CardTitle>
         <CardDescription>
-          Sample instalments on the {comparison.suggestedRegime} regime after
-          TDS and TCS. Salary fully covered by TDS often has nothing due here.
+          Instalments on the {comparison.suggestedRegime} regime after TDS and
+          TCS. Salary that is fully covered by TDS often has nothing due here.
         </CardDescription>
       </CardHeader>
       <CardContent>
         {schedule.due === 0 ? (
           <InfoNote>
-            TDS and TCS already cover this sample tax, so no instalment is
-            shown.
+            TDS and TCS already cover this tax, so no instalment is shown.
           </InfoNote>
         ) : (
           <ul className="space-y-3 text-sm">

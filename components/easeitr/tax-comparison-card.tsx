@@ -51,8 +51,9 @@ export function TaxComparisonCard({
         </div>
       </div>
       <p className="mt-4 text-sm leading-6 text-muted-foreground">
-        Illustrative comparison only. Special-rate income and several detailed
-        tax rules are not included.
+        Slab tax for {comparison.suggestedRegime === "new" ? "the new" : "the old"} regime
+        is lower here. Special-rate gains use their own rates. Indexation and
+        several exemptions are not included.
       </p>
     </article>
   );

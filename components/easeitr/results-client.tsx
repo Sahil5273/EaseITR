@@ -98,8 +98,8 @@ export function ITRRecommendationCard({
           {recommendation.summary}
         </p>
         <p className="mt-3 text-sm leading-6 text-slate-500">
-          This is a rule-based sample recommendation, not a guarantee of legal
-          eligibility.
+          This recommendation uses the assessment-year gates. It is not a
+          guarantee of legal eligibility.
         </p>
       </div>
     </article>
@@ -272,7 +272,7 @@ export function ResultsClient() {
                   <CardHeader>
                     <CardTitle className="text-xl font-bold">Alternative forms</CardTitle>
                     <CardDescription>
-                      Why other common individual forms were not selected by the sample rules.
+                      Why each other form is allowed or blocked.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-3">
@@ -283,7 +283,9 @@ export function ResultsClient() {
                       >
                         <div className="flex items-center justify-between">
                           <p className="font-bold">{alternative.form}</p>
-                          <Badge variant="outline">Not selected</Badge>
+                          <Badge variant="outline">
+                            {alternative.eligible ? "Allowed" : "Blocked"}
+                          </Badge>
                         </div>
                         <p className="mt-2 text-sm leading-6 text-slate-500">
                           {alternative.reason}

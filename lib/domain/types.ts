@@ -211,6 +211,11 @@ export interface ITRRecommendation {
   requiresProfessionalReview: boolean;
 }
 
+export interface TaxLine {
+  label: string;
+  amount: number;
+}
+
 export interface TaxEstimate {
   totalIncome: number;
   totalDeductions: number;
@@ -219,6 +224,8 @@ export interface TaxEstimate {
   taxesPaid: number;
   balance: number;
   isRefund: boolean;
+  lines: TaxLine[];
+  notes: string[];
 }
 
 export interface RegimeComparison {
