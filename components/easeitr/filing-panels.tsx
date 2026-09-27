@@ -36,9 +36,9 @@ export function FilingModeBar() {
     }));
 
   return (
-    <div className="border-b border-border bg-slate-50 dark:border-slate-800 dark:bg-slate-950">
-      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-3 px-4 py-3 sm:px-6 lg:flex-row lg:items-center lg:px-8">
-        <p className="text-sm font-semibold">How will you use this assessment?</p>
+    <div className="border-b border-border bg-card/75 backdrop-blur dark:bg-slate-950/80">
+      <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-3 px-4 py-4 sm:px-6 lg:flex-row lg:items-center lg:px-8">
+        <p className="text-base font-semibold">How will you use this assessment?</p>
         <div className="flex flex-wrap gap-2">
           <Button
             type="button"
@@ -64,9 +64,9 @@ export function FilingModeBar() {
           </Button>
         </div>
         {reason ? (
-          <p className="text-sm leading-6 text-amber-800 dark:text-amber-200">{reason}</p>
+          <p className="text-base leading-7 text-amber-800 dark:text-amber-200">{reason}</p>
         ) : (
-          <p className="text-sm text-slate-500">
+          <p className="max-w-xl text-base leading-7 text-muted-foreground">
             {data.filingMode === "self-file"
               ? "The self-file checklist stays closed until documents and mismatches are resolved."
               : "The CA pack collects income, documents, mismatches, and questions."}

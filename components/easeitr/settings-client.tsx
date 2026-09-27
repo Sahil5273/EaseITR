@@ -67,10 +67,10 @@ export function SettingsClient() {
   };
   return (
     <AppShell width="reading">
-      <h1 className="text-3xl font-bold tracking-[-0.04em] sm:text-4xl">
+      <h1 className="page-title">
         Settings & privacy
       </h1>
-      <p className="mt-3 text-lg leading-8 text-slate-600 dark:text-slate-300">
+      <p className="page-lead">
         Control the appearance and data stored by this frontend prototype.
       </p>
       <div className="mt-8 space-y-5">

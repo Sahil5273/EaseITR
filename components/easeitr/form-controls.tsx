@@ -29,7 +29,7 @@ export function CurrencyInput({
   const id = useId();
   return (
     <div className="space-y-2">
-      <Label htmlFor={id} className="text-sm font-semibold">
+      <Label htmlFor={id} className="text-base font-semibold">
         {label}
       </Label>
       <div className="relative">
@@ -49,7 +49,7 @@ export function CurrencyInput({
         />
       </div>
       {description && (
-        <p className="text-xs leading-5 text-slate-500">{description}</p>
+        <p className="text-sm leading-6 text-muted-foreground">{description}</p>
       )}
     </div>
   );
@@ -125,11 +125,11 @@ export function YesNoSelector({
 }) {
   return (
     <fieldset className="space-y-3">
-      <legend className="text-sm font-semibold text-slate-900 dark:text-slate-100">
+      <legend className="text-base font-semibold text-foreground">
         {label}
       </legend>
       {description && (
-        <p className="text-xs leading-5 text-slate-500">{description}</p>
+        <p className="text-sm leading-6 text-muted-foreground">{description}</p>
       )}
       <div className="grid grid-cols-2 gap-2">
         {[true, false].map((option) => (
@@ -179,7 +179,7 @@ export function MultiSelectIncome({
       <legend className="text-sm font-semibold">
         Which income sources apply to you?
       </legend>
-      <p className="mt-1 text-xs leading-5 text-slate-500">
+      <p className="mt-1 text-sm leading-6 text-muted-foreground">
         Select every source you expect to report.
       </p>
       <div className="mt-3 grid gap-2 sm:grid-cols-2">

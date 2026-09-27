@@ -68,10 +68,10 @@ const faqs = [
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main className="min-h-screen text-foreground">
       <AppShellHeader />
 
-      <section className="relative border-b border-border bg-card dark:border-slate-800 dark:bg-slate-950">
+      <section className="relative border-b border-border">
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-[1.03fr_0.97fr] lg:px-8 lg:py-24">
           <div className="max-w-2xl">
             <Badge
@@ -81,11 +81,13 @@ export default function HomePage() {
               <Sparkles className="mr-1.5 size-3.5" aria-hidden="true" /> Independent
               tax-assistance prototype
             </Badge>
-            <h1 className="max-w-xl text-4xl font-bold leading-[1.08] tracking-[-0.045em] text-slate-950 dark:text-white sm:text-5xl lg:text-[3.65rem]">
-              EaseITR guides individual taxpayers through income details, tax estimates, regime comparison, document extraction, and ITR form recommendations.
+            <h1 className="max-w-xl text-[2.35rem] font-semibold leading-[1.12] tracking-[-0.03em] text-foreground sm:text-5xl lg:text-[3.25rem]">
+              See which ITR form fits, before you file.
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 dark:text-slate-300">
-              Answer plain-language questions, understand your income picture, estimate tax liability, compare tax regimes, assist with document extraction, and see which ITR form may apply—without tax jargon.
+            <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground sm:text-xl sm:leading-9">
+              Walk through salary, investments, trading, and freelance income.
+              Compare a sample old and new regime, then prepare a pack for your
+              CA or check the file yourself.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <ShimmerButton onClick={() => window.location.href = "/assessment"}>

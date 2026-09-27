@@ -71,10 +71,10 @@ export function HelpClient() {
         <Badge variant="outline" className="rounded-full">
           Education library
         </Badge>
-        <h1 className="mt-3 text-3xl font-bold tracking-[-0.04em] sm:text-4xl">
+        <h1 className="page-title mt-3">
           Tax concepts in plain language
         </h1>
-        <p className="mt-3 text-lg leading-8 text-slate-600 dark:text-slate-300">
+        <p className="page-lead mx-auto">
           Short, prototype explanations to help you understand the questions.
           Content requires review by a qualified tax professional.
         </p>

@@ -23,8 +23,8 @@
 }
 
 :root {
-  --background: #f2f6f4;
-  --foreground: #0c211a;
+  --background: #f7f6f2;
+  --foreground: #14241c;
   --card: #ffffff;
   --card-foreground: #0c211a;
   --popover: #ffffff;
@@ -34,7 +34,7 @@
   --secondary: #e2ede7;
   --secondary-foreground: #0c211a;
   --muted: #e2ede7;
-  --muted-foreground: #475a52;
+  --muted-foreground: #3c5148;
   --accent: #e4f4ec;
   --accent-foreground: #047857;
   --destructive: #dc2626;
@@ -152,15 +152,20 @@
     --sidebar-ring: #34d399;
 }
 
+html {
+  font-size: 17px;
+}
+
 body {
-  background: var(--background);
+  background-color: var(--background);
   background-image:
-    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.08) 0px, transparent 55%),
-    radial-gradient(at 100% 0%, rgba(251, 146, 60, 0.05) 0px, transparent 55%),
-    radial-gradient(at 50% 100%, rgba(20, 184, 166, 0.04) 0px, transparent 55%);
+    radial-gradient(ellipse 90% 55% at 8% -10%, rgba(4, 120, 87, 0.16), transparent 58%),
+    radial-gradient(ellipse 70% 45% at 100% 0%, rgba(15, 118, 110, 0.08), transparent 52%);
   background-attachment: fixed;
   color: var(--foreground);
   font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -175,15 +180,29 @@ body {
 
 @layer components {
   .eyebrow {
-    @apply text-sm font-bold uppercase tracking-[0.14em] text-emerald-700 dark:text-emerald-400;
+    @apply text-sm font-semibold tracking-normal text-emerald-800 dark:text-emerald-300;
+  }
+
+  .page-title {
+    @apply text-[1.85rem] font-semibold leading-[1.15] tracking-[-0.03em] text-foreground sm:text-[2.35rem];
+  }
+
+  .page-lead {
+    @apply mt-3 max-w-2xl text-lg leading-8 text-muted-foreground;
   }
 
   .section-title {
-    @apply mt-3 text-3xl font-bold leading-tight tracking-[-0.035em] text-slate-950 dark:text-white sm:text-4xl;
+    @apply mt-3 text-[1.85rem] font-semibold leading-tight tracking-[-0.03em] text-foreground sm:text-[2.35rem];
   }
 
   .section-copy {
-    @apply mt-4 text-base leading-7 text-slate-600 dark:text-slate-400;
+    @apply mt-4 text-lg leading-8 text-muted-foreground;
+  }
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 16px;
   }
 }
 

@@ -34,9 +34,9 @@ export function QuestionCard({
       <CardHeader className="gap-2 border-b border-border/70 px-5 py-5 dark:border-slate-800 sm:px-7">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <CardTitle className="text-xl tracking-tight">{title}</CardTitle>
+            <CardTitle className="text-2xl font-semibold tracking-tight">{title}</CardTitle>
             {description && (
-              <CardDescription className="mt-2 max-w-2xl leading-6">
+              <CardDescription className="mt-2 max-w-2xl text-base leading-7">
                 {description}
               </CardDescription>
             )}

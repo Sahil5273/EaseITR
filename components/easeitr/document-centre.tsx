@@ -167,7 +167,7 @@ export function ExtractedFieldEditor({
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+          <p className="text-sm font-medium text-muted-foreground">
             {field.label}
           </p>
           {editing ? (
@@ -395,10 +395,10 @@ export function DocumentCentre() {
         <Badge variant="outline" className="rounded-full">
           Mock AI-assisted workflow
         </Badge>
-        <h1 className="mt-3 text-3xl font-bold tracking-[-0.04em] sm:text-4xl">
+        <h1 className="page-title mt-3">
           Document centre
         </h1>
-        <p className="mt-3 text-lg leading-8 text-slate-600 dark:text-slate-300">
+        <p className="page-lead">
           Add a statement, accept the fields you trust, and those amounts are
           written into the assessment. Parsing is still a mock. Nothing is
           uploaded to a server.
@@ -450,7 +450,7 @@ export function DocumentCentre() {
                 )}
               />
               <p className="mt-4 text-sm font-bold">{item.label}</p>
-              <p className="mt-1 text-xs text-slate-500">{item.hint}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{item.hint}</p>
             </button>
           ))}
         </div>

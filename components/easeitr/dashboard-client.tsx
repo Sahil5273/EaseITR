@@ -87,10 +87,10 @@ export function DashboardClient() {
           <Badge variant="outline" className="rounded-full">
             Sample workspace
           </Badge>
-          <h1 className="mt-3 text-3xl font-bold tracking-[-0.04em] sm:text-4xl">
+          <h1 className="page-title mt-3">
             Good evening, Sample Taxpayer
           </h1>
-          <p className="mt-2 text-slate-500">
+          <p className="page-lead">
             Here’s your estimated position for assessment year{" "}
             {assessment.profile.assessmentYear}.
           </p>

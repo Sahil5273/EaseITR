@@ -128,7 +128,7 @@ export function AppShell({
   width?: "wide" | "reading" | "full";
 }) {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen text-foreground">
       <AppShellHeader />
       <FilingModeBar />
       <main

@@ -154,11 +154,11 @@ export function WizardClient({ step }: { step: WizardStepSlug }) {
               <p className="text-sm font-bold text-emerald-700 dark:text-emerald-400">
                 Step {index + 1} of {WIZARD_STEPS.length}
               </p>
-              <h1 className="mt-1 text-3xl font-bold tracking-[-0.035em]">
+              <h1 className="page-title mt-1">
                 {currentStepObj.label}
               </h1>
             </div>
-            <div className="flex items-center gap-2 text-xs text-slate-500">
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Check className="size-3.5 text-emerald-600" aria-hidden="true" />
               {savedAt
                 ? `Saved ${new Date(savedAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`

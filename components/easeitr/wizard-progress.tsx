@@ -15,7 +15,7 @@ export function ProgressSidebar({ current }: { current: WizardStepSlug }) {
   return (
     <aside className="hidden w-64 xl:w-72 shrink-0 lg:block">
       <div className="sticky top-24 rounded-3xl border border-border bg-card p-4 shadow-[0_4px_20px_-2px_rgba(15,23,42,0.04)] dark:border-slate-800 dark:bg-slate-900">
-        <p className="px-3 pb-3 text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+        <p className="px-3 pb-3 text-sm font-semibold text-muted-foreground">
           Assessment progress
         </p>
         <nav aria-label="Assessment steps" className="space-y-1">
